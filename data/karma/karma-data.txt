@@ -1,0 +1,13 @@
+ksante,0,1
+varus,0,1
+pantheon,0,1
+karma,1,2
+swain,0,1
+jayce,1,0
+viego,1,0
+jhin,1,0
+syndra,1,0
+ezreal,0,1
+nidalee,0,1
+jax,0,1
+galio,0,1

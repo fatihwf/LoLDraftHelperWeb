@@ -1,0 +1,5 @@
+varus,0,1
+syndra,0,1
+kennen,0,1
+pantheon,0,1
+viego,0,1

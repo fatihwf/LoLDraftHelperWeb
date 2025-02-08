@@ -1,0 +1,5 @@
+seraphine,1,0
+wukong,1,0
+senna,1,0
+irelia,1,0
+yasuo,1,0
