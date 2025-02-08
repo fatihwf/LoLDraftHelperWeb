@@ -162,7 +162,7 @@ def get_counter_score(champ,picked):
 def get_winrate_score(champ):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     # Construct the path to the 'data' directory
-    winrate_score = 0
+    
     path = os.path.join(BASE_DIR, 'data')
     for folder in os.listdir(path):
         if folder == champ:
@@ -177,7 +177,7 @@ def get_winrate_score(champ):
                                 w = int(parts[1])
                                 l = int(parts[2])
                                 max_play_count = find_max_play_count()
-                                winrate_score = (w / (w+l)) * ((w+l) / max_play_count) if max_play_count != 0 else 0
+                                winrate_score = (w / (w+l)) * ((w+l) / max_play_count)
                                 break
                         break
                     break
