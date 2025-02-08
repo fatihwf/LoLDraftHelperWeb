@@ -1,0 +1,13 @@
+jayce,1,1
+ezreal,0,1
+amumu,0,1
+gnar,0,1
+nautilus,0,1
+vi,1,0
+ksante,1,0
+aurora,1,0
+kaisa,1,0
+rakan,2,0
+viego,1,0
+missfortune,1,0
+syndra,1,0

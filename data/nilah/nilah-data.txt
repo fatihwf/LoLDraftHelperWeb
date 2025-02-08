@@ -1,0 +1,5 @@
+viktor,1,0
+ksante,1,0
+wukong,1,0
+nilah,1,0
+rell,1,0

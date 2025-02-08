@@ -1,0 +1,13 @@
+corki,0,1
+zyra,0,1
+leona,0,1
+kaisa,0,1
+malphite,2,1
+orianna,1,0
+wukong,1,0
+ezreal,1,0
+poppy,1,0
+xinzhao,1,0
+hwei,1,0
+renataglasc,1,0
+ashe,1,0

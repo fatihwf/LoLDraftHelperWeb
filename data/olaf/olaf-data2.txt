@@ -1,0 +1,5 @@
+corki,0,1
+maokai,0,1
+ksante,0,1
+rell,0,1
+hwei,0,1

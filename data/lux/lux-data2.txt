@@ -1,0 +1,8 @@
+corki,2,0
+rumble,2,0
+wukong,1,0
+jhin,1,0
+leona,1,0
+sejuani,1,0
+lucian,1,0
+nami,1,0

@@ -1,0 +1,16 @@
+missfortune,1,0
+rell,2,0
+jax,1,0
+lillia,1,0
+tristana,1,0
+skarner,2,0
+varus,2,0
+ambessa,2,0
+azir,1,0
+viktor,1,0
+alistar,1,0
+elise,1,0
+anivia,1,0
+yone,1,0
+viego,1,0
+ashe,1,0

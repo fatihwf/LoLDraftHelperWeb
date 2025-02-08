@@ -1,0 +1,14 @@
+missfortune,0,2
+ksante,1,2
+rell,0,1
+xinzhao,0,1
+leblanc,2,3
+corki,0,1
+braum,1,1
+maokai,0,2
+ezreal,2,0
+nocturne,1,1
+leona,1,0
+alistar,0,1
+camille,1,0
+wukong,1,0
