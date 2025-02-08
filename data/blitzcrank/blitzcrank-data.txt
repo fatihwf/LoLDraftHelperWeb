@@ -1,0 +1,8 @@
+ksante,0,1
+vi,0,1
+aurora,0,1
+ezreal,0,2
+blitzcrank,0,2
+corki,0,1
+nidalee,0,1
+sion,0,1

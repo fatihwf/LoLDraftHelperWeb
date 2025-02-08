@@ -1,0 +1,5 @@
+corki,1,0
+taliyah,1,0
+rell,1,0
+shen,1,0
+belveth,1,0

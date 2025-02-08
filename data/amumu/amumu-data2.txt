@@ -1,0 +1,9 @@
+corki,2,0
+zyra,1,0
+leona,1,0
+kaisa,1,0
+malphite,1,0
+wukong,1,0
+gwen,1,0
+alistar,1,0
+azir,1,0

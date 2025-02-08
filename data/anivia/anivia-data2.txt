@@ -1,0 +1,10 @@
+rumble,0,1
+leesin,0,1
+kaisa,0,1
+corki,0,1
+pyke,0,1
+vi,1,0
+aurora,1,0
+caitlyn,1,0
+neeko,1,0
+gragas,1,0
