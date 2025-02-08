@@ -1,0 +1,5 @@
+ashe,1,0
+viego,1,0
+braum,1,0
+sion,1,0
+zoe,1,0

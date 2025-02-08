@@ -1,0 +1,5 @@
+corki,0,1
+sejuani,0,1
+zeri,0,1
+yuumi,0,1
+aurora,0,1
