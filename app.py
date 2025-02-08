@@ -1,14 +1,15 @@
 
 from flask import Flask, request, jsonify, render_template
-
+from pathlib import Path
 app = Flask(__name__)
 
 import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, 'data')
 
 def check_roles(picked):
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # Construct the path to the 'data' directory
-    path = os.path.join(BASE_DIR, 'data')
+
+
     picked_roles = []
     all_roles = ["top","jg","mid","adc","sup"]
     role_list = {
@@ -42,25 +43,33 @@ def check_roles(picked):
     return non_picked
 
 def get_role(champ):
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # Construct the path to the 'data' directory
-    path = os.path.join(BASE_DIR, 'data')
-    out = False
+    # Şampiyon ismini küçük harflere çeviriyoruz
+    champ = champ.lower()
+
+    # DATA_DIR değişkenini kullanarak dosya yolunu belirliyoruz
+    path = DATA_DIR
     roles = []
-    for folder in os.listdir(path):
-        if folder == champ:
-            folder_path = os.path.join(path, folder)
-            for file in os.listdir(folder_path):
-                if file.endswith("-role.txt"):
-                    file_path = os.path.join(folder_path, file)
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        for line in f:
-                            parts = line.strip().split(',')
-                            for role in parts:
-                                roles.append(role)
-                        out = True
-        if out:
+
+    # Şampiyon klasörünün yolunu oluşturuyoruz
+    champ_folder_path = os.path.join(path, champ)
+
+    # Şampiyon klasörü mevcut mu kontrol ediyoruz
+    if not os.path.isdir(champ_folder_path):
+        # Eğer klasör yoksa, boş liste döndürüyoruz
+        return roles
+
+    # Şampiyon klasöründeki dosyaları tarıyoruz
+    for file in os.listdir(champ_folder_path):
+        if file.endswith("-role.txt"):
+            file_path = os.path.join(champ_folder_path, file)
+            # Role dosyasını açıp rolleri okuyoruz
+            with open(file_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    parts = line.strip().split(',')
+                    roles.extend(parts)
+            # Role dosyasını bulduktan sonra döngüden çıkıyoruz
             break
+
     return roles
 
 def add(champ,mylist):
@@ -68,16 +77,18 @@ def add(champ,mylist):
     mylist.append(champ)
 
 def find_max_play_count():
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # Construct the path to the 'data' directory
-    path = os.path.join(BASE_DIR, 'data')
+    from pathlib import Path
+    BASE_DIR = Path(__file__).resolve().parent
+    path = BASE_DIR / 'data'
+
     max_play_count = -1
 
-    for folder in os.listdir(path):
-        folder_path = os.path.join(path, folder)
-        if os.path.isdir(folder_path):
-            for file in os.listdir(folder_path):
-                if file.endswith("-data.txt"):
+    for folder in path.iterdir():
+        if folder.is_dir():
+            folder_path = os.path.join(path, folder.name)
+            folder_path = Path(folder_path)  # Path nesnesine dönüştürülüyor
+            for file in folder_path.iterdir():
+                if file.name.endswith("-data.txt"):
                     file_path = os.path.join(folder_path, file)
                     with open(file_path, 'r', encoding='utf-8') as f:
                         total = 0
@@ -93,95 +104,155 @@ def find_max_play_count():
 
 
 
-def get_synergy_score(champ,picked):
+def get_synergy_score(champ, picked):
     if len(picked) == 0:
         return 0
 
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # Construct the path to the 'data' directory
-    path = os.path.join(BASE_DIR, 'data')
-    max_played_with_count = 0.001
+    # Şampiyon isimlerini küçük harfe çeviriyoruz
+    champ = champ.lower()
+    picked = [p.lower() for p in picked]
+
+    # DATA_DIR değişkenini kullanarak dosya yolunu belirliyoruz
+    path = DATA_DIR
+    max_played_with_count = 0.001  # Bölme hatalarını önlemek için küçük bir sayı
     synergy_score = 0
-    for folder in os.listdir(path):
-        if folder == champ:
-            folder_path = os.path.join(path, folder)
-            for file in os.listdir(folder_path):
-                if file.endswith("-data.txt"):
-                    file_path = os.path.join(folder_path, file)
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        for line in f:
-                            parts = line.strip().split(',')
-                            name,w,l = parts[0],int(parts[1]),int(parts[2])
-                            if name == champ:
-                                continue
-                            x = w+l
-                            if x > max_played_with_count:
-                                max_played_with_count = x
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        for ally in picked:
-                            for line in f:
-                                parts = line.strip().split(',')
-                                name,w,l = parts[0],int(parts[1]),int(parts[2])
-                                if name == ally:
-                                    synergy_score += (w/(w+l)) * ((w+l)/max_played_with_count)
-    return (synergy_score / len(picked))
 
-def get_counter_score(champ,picked):
-    if len(picked) == 0:
-        return 0
+    # Şampiyon klasörünün yolunu oluşturuyoruz
+    champ_folder_path = os.path.join(path, champ)
 
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # Construct the path to the 'data' directory
-    path = os.path.join(BASE_DIR, 'data')
-    max_played_against_count = 0.001
-    counter_score = 0
-    for folder in os.listdir(path):
-        if folder == champ:
-            folder_path = os.path.join(path, folder)
-            for file in os.listdir(folder_path):
-                if file.endswith("-data2.txt"):
-                    file_path = os.path.join(folder_path, file)
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        for line in f:
-                            parts = line.strip().split(',')
-                            name, w, l = parts[0], int(parts[1]), int(parts[2])
-                            if name == champ:
-                                continue
-                            x = w + l
-                            if x > max_played_against_count:
-                                max_played_against_count = x
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        for ally in picked:
-                            for line in f:
-                                parts = line.strip().split(',')
-                                name, w, l = parts[0], int(parts[1]), int(parts[2])
-                                if name == ally:
-                                    counter_score += (w / (w + l)) * ((w + l) / max_played_against_count)
-    return (counter_score / len(picked))
+    # Şampiyon klasörü mevcut mu kontrol ediyoruz
+    if not os.path.isdir(champ_folder_path):
+        return synergy_score  # Şampiyon klasörü yoksa 0 döndür
 
-def get_winrate_score(champ):
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # Construct the path to the 'data' directory
-    
-    path = os.path.join(BASE_DIR, 'data')
-    for folder in os.listdir(path):
-        if folder == champ:
-            folder_path = os.path.join(path, folder)
-            for file in os.listdir(folder_path):
-                if file.endswith("-data.txt"):
-                    file_path = os.path.join(folder_path, file)
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        for line in f:
-                            parts = line.strip().split(',')
-                            if parts[0] == champ:
+    # Şampiyon klasöründeki dosyaları tarıyoruz
+    for file in os.listdir(champ_folder_path):
+        if file.endswith("-data.txt"):
+            file_path = os.path.join(champ_folder_path, file)
+
+            # İlk olarak en yüksek play count değerini buluyoruz
+            with open(file_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    parts = line.strip().split(',')
+                    if len(parts) >= 3:
+                        name = parts[0].lower()
+                        if name == champ:
+                            continue  # Kendisiyle oynama verilerini atlıyoruz
+                        try:
+                            w = int(parts[1])
+                            l = int(parts[2])
+                            total_games = w + l
+                            if total_games > max_played_with_count:
+                                max_played_with_count = total_games
+                        except ValueError:
+                            continue  # Geçersiz veri varsa atlıyoruz
+
+            # Ardından, seçilen şampiyonlarla sinerji skorunu hesaplıyoruz
+            with open(file_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    parts = line.strip().split(',')
+                    if len(parts) >= 3:
+                        name = parts[0].lower()
+                        if name in picked:
+                            try:
                                 w = int(parts[1])
                                 l = int(parts[2])
-                                max_play_count = find_max_play_count()
-                                winrate_score = (w / (w+l)) * ((w+l) / max_play_count)
-                                break
+                                total_games = w + l
+                                win_rate = w / total_games if total_games > 0 else 0
+                                normalized_play_count = total_games / max_played_with_count
+                                synergy_score += win_rate * normalized_play_count
+                            except ValueError:
+                                continue  # Geçersiz veri varsa atlıyoruz
+            break  # İlgili dosyayı işledikten sonra döngüden çıkıyoruz
+
+    average_synergy_score = synergy_score / len(picked)
+    return average_synergy_score
+
+def get_counter_score(champ, picked):
+    if len(picked) == 0:
+        return 0
+
+    # Şampiyon isimlerini küçük harfe çeviriyoruz
+    champ = champ.lower()
+    picked = [p.lower() for p in picked]
+
+    # DATA_DIR değişkenini kullanarak dosya yolunu belirliyoruz
+    path = DATA_DIR
+    max_played_against_count = 0.001  # Bölme hatasını önlemek için küçük bir sayı
+    counter_score = 0
+
+    # Şampiyon klasörünün yolunu oluşturuyoruz
+    champ_folder_path = os.path.join(path, champ)
+
+    # Şampiyon klasörünün mevcut olup olmadığını kontrol ediyoruz
+    if not os.path.isdir(champ_folder_path):
+        return counter_score  # Klasör yoksa 0 döndür
+
+    # Şampiyon klasöründeki dosyaları tarıyoruz
+    for file in os.listdir(champ_folder_path):
+        if file.endswith("-data2.txt"):
+            file_path = os.path.join(champ_folder_path, file)
+
+            # İlk olarak en yüksek oynama sayısını bulalım
+            with open(file_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    parts = line.strip().split(',')
+                    if len(parts) >= 3:
+                        name = parts[0].lower()
+                        if name == champ:
+                            continue  # Kendisine karşı oynanan maçları atlıyoruz
+                        try:
+                            w = int(parts[1])
+                            l = int(parts[2])
+                            total_games = w + l
+                            if total_games > max_played_against_count:
+                                max_played_against_count = total_games
+                        except ValueError:
+                            continue  # Geçersiz veri varsa atlıyoruz
+
+            # Ardından, seçilen şampiyonlara karşı skorları hesaplayalım
+            with open(file_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    parts = line.strip().split(',')
+                    if len(parts) >= 3:
+                        name = parts[0].lower()
+                        if name in picked:
+                            try:
+                                w = int(parts[1])
+                                l = int(parts[2])
+                                total_games = w + l
+                                win_rate = w / total_games if total_games > 0 else 0
+                                normalized_play_count = total_games / max_played_against_count if max_played_against_count > 0 else 0
+                                counter_score += win_rate * normalized_play_count
+                            except ValueError:
+                                continue  # Geçersiz veri varsa atlıyoruz
+            break  # İlgili dosyayı işledikten sonra döngüden çıkıyoruz
+
+    average_counter_score = counter_score / len(picked) if len(picked) > 0 else 0
+    return average_counter_score
+
+
+def get_winrate_score(champ):
+    winrate_score = 0  # Varsayılan değer
+
+    champ_path = os.path.join(DATA_DIR, champ)
+    if not os.path.exists(champ_path):
+        return winrate_score
+
+    for file in os.listdir(champ_path):
+        if file.endswith("-data.txt"):
+            file_path = os.path.join(champ_path, file)
+            with open(file_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    parts = line.strip().split(',')
+                    if parts[0] == champ:
+                        w = int(parts[1])
+                        l = int(parts[2])
+                        max_play_count = find_max_play_count()
+                        if max_play_count != 0:
+                            winrate_score = (w / (w+l)) * ((w+l) / max_play_count)
+                        else:
+                            winrate_score = 0
                         break
-                    break
-                break
             break
     return winrate_score
 
@@ -202,33 +273,35 @@ def check_same_position_score(champ,best,points):
 
 @app.route('/get_champion_list', methods=['GET'])
 def get_champion_list():
+    from pathlib import Path
     # Şampiyon verilerinin bulunduğu dizini belirtin
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # Construct the path to the 'data' directory
-    path = os.path.join(BASE_DIR, 'data')
+    BASE_DIR = Path(__file__).resolve().parent
+    path = BASE_DIR / 'data'
 
     # Klasör isimlerini okuyarak şampiyon listesini oluşturun
-    champion_list = [folder for folder in os.listdir(path) if os.path.isdir(os.path.join(path, folder))]
+    champion_list = [folder.name for folder in path.iterdir() if folder.is_dir()]
 
     return jsonify({'championList': champion_list})
 
 def predict_red(blue_bans, red_bans, blue_picked, red_picked):
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # Construct the path to the 'data' directory
-    path = os.path.join(BASE_DIR, 'data')
+
+    BASE_DIR = Path(__file__).resolve().parent
+    path = BASE_DIR / 'data'
     best_general = []
     best_synergy = []
     best_counter = []
-    for folder in os.listdir(path):
-        if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked:
-            if set(get_role(folder)) & set(check_roles(red_picked)):
-                synergy_score = get_synergy_score(folder, red_picked)
-                best_synergy.append((folder, synergy_score))
-                counter_score = get_counter_score(folder, blue_picked)
-                best_counter.append((folder, counter_score))
-                winrate_score = get_winrate_score(folder)
-                general_points = synergy_score/3 + counter_score/3 + winrate_score
-                best_general.append((folder, general_points))
+    for folderpath in path.iterdir():  # path.iterdir() kullanarak her öğeyi alıyoruz
+        if folderpath.is_dir():  # Klasör olup olmadığını kontrol ediyoruz
+            folder = folderpath.name
+            if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked:
+                if set(get_role(folder)) & set(check_roles(red_picked)):
+                    synergy_score = get_synergy_score(folder, red_picked)
+                    best_synergy.append((folder, synergy_score))
+                    counter_score = get_counter_score(folder, blue_picked)
+                    best_counter.append((folder, counter_score))
+                    winrate_score = get_winrate_score(folder)
+                    general_points = synergy_score/3 + counter_score/3 + winrate_score
+                    best_general.append((folder, general_points))
     best_general.sort(key=lambda x: x[1], reverse=True)
     best_synergy.sort(key=lambda x: x[1], reverse=True)
     best_counter.sort(key=lambda x: x[1], reverse=True)
@@ -245,24 +318,26 @@ def predict_red(blue_bans, red_bans, blue_picked, red_picked):
     return general_recommendations, synergetic_recommendations, counter_recommendations
 
 def predict_blue(blue_bans, red_bans, blue_picked, red_picked):
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    # Construct the path to the 'data' directory
-    path = os.path.join(BASE_DIR, 'data')
+    BASE_DIR = Path(__file__).resolve().parent
+    path = BASE_DIR / 'data'
+
     best_general = []
     best_synergy = []
     best_counter = []
-    for folder in os.listdir(path):
-        if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked:
-            if set(get_role(folder)) & set(check_roles(blue_picked)):
-                synergy_score = get_synergy_score(folder, blue_picked)
-                best_synergy.append((folder, synergy_score))
+    for folderpath in path.iterdir():  # path.iterdir() kullanarak her öğeyi alıyoruz
+        if folderpath.is_dir():  # Klasör olup olmadığını kontrol ediyoruz
+            folder = folderpath.name
+            if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked:
+                if set(get_role(folder)) & set(check_roles(blue_picked)):
+                    synergy_score = get_synergy_score(folder, blue_picked)
+                    best_synergy.append((folder, synergy_score))
 
-                counter_score = get_counter_score(folder, red_picked)
-                best_counter.append((folder, counter_score))
+                    counter_score = get_counter_score(folder, red_picked)
+                    best_counter.append((folder, counter_score))
 
-                winrate_score = get_winrate_score(folder)
-                general_points = synergy_score + counter_score + winrate_score
-                best_general.append((folder, general_points))
+                    winrate_score = get_winrate_score(folder)
+                    general_points = synergy_score + counter_score + winrate_score
+                    best_general.append((folder, general_points))
 
     best_general.sort(key=lambda x: x[1], reverse=True)
     best_synergy.sort(key=lambda x: x[1], reverse=True)
