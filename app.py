@@ -162,6 +162,7 @@ def get_counter_score(champ,picked):
 def get_winrate_score(champ):
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     # Construct the path to the 'data' directory
+    winrate_score = 0
     path = os.path.join(BASE_DIR, 'data')
     for folder in os.listdir(path):
         if folder == champ:
