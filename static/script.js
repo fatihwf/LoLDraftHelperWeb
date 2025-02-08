@@ -92,7 +92,7 @@ function nextSelection() {
         } else {
             fetchPrediction(side.toLowerCase());
         }
-    }, 1000);
+    }, 5000);
 }
 
 function promptBanSelection(side) {
