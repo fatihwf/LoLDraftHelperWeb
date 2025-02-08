@@ -6,7 +6,9 @@ app = Flask(__name__)
 import os
 
 def check_roles(picked):
-    path = r"C:\Users\User\Desktop\loldraft\data"
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # Construct the path to the 'data' directory
+    path = os.path.join(BASE_DIR, 'data')
     picked_roles = []
     all_roles = ["top","jg","mid","adc","sup"]
     role_list = {
@@ -40,7 +42,9 @@ def check_roles(picked):
     return non_picked
 
 def get_role(champ):
-    path = r"C:\Users\User\Desktop\loldraft\data"
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # Construct the path to the 'data' directory
+    path = os.path.join(BASE_DIR, 'data')
     out = False
     roles = []
     for folder in os.listdir(path):
@@ -64,7 +68,9 @@ def add(champ,mylist):
     mylist.append(champ)
 
 def find_max_play_count():
-    path = r"C:\Users\User\Desktop\loldraft\data"
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # Construct the path to the 'data' directory
+    path = os.path.join(BASE_DIR, 'data')
     max_play_count = -1
 
     for folder in os.listdir(path):
@@ -91,7 +97,9 @@ def get_synergy_score(champ,picked):
     if len(picked) == 0:
         return 0
 
-    path = r"C:\Users\User\Desktop\loldraft\data"
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # Construct the path to the 'data' directory
+    path = os.path.join(BASE_DIR, 'data')
     max_played_with_count = 0.001
     synergy_score = 0
     for folder in os.listdir(path):
@@ -122,7 +130,9 @@ def get_counter_score(champ,picked):
     if len(picked) == 0:
         return 0
 
-    path = r"C:\Users\User\Desktop\loldraft\data"
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # Construct the path to the 'data' directory
+    path = os.path.join(BASE_DIR, 'data')
     max_played_against_count = 0.001
     counter_score = 0
     for folder in os.listdir(path):
@@ -150,7 +160,9 @@ def get_counter_score(champ,picked):
     return (counter_score / len(picked))
 
 def get_winrate_score(champ):
-    path = r"C:\Users\User\Desktop\loldraft\data"
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # Construct the path to the 'data' directory
+    path = os.path.join(BASE_DIR, 'data')
     for folder in os.listdir(path):
         if folder == champ:
             folder_path = os.path.join(path, folder)
@@ -190,7 +202,9 @@ def check_same_position_score(champ,best,points):
 @app.route('/get_champion_list', methods=['GET'])
 def get_champion_list():
     # Şampiyon verilerinin bulunduğu dizini belirtin
-    path = r"C:\Users\User\Desktop\loldraft\data"  # Örneğin: r'C:\Users\User\Desktop\loldraft\data'
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # Construct the path to the 'data' directory
+    path = os.path.join(BASE_DIR, 'data')
 
     # Klasör isimlerini okuyarak şampiyon listesini oluşturun
     champion_list = [folder for folder in os.listdir(path) if os.path.isdir(os.path.join(path, folder))]
@@ -198,7 +212,9 @@ def get_champion_list():
     return jsonify({'championList': champion_list})
 
 def predict_red(blue_bans, red_bans, blue_picked, red_picked):
-    path = r"C:\Users\User\Desktop\loldraft\data"
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # Construct the path to the 'data' directory
+    path = os.path.join(BASE_DIR, 'data')
     best_general = []
     best_synergy = []
     best_counter = []
@@ -228,7 +244,9 @@ def predict_red(blue_bans, red_bans, blue_picked, red_picked):
     return general_recommendations, synergetic_recommendations, counter_recommendations
 
 def predict_blue(blue_bans, red_bans, blue_picked, red_picked):
-    path = r"C:\Users\User\Desktop\loldraft\data"
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    # Construct the path to the 'data' directory
+    path = os.path.join(BASE_DIR, 'data')
     best_general = []
     best_synergy = []
     best_counter = []
