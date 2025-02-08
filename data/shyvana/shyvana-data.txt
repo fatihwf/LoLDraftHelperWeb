@@ -1,0 +1,5 @@
+varus,1,0
+renekton,1,0
+yone,1,0
+nautilus,1,0
+shyvana,1,0

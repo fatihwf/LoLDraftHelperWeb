@@ -1,0 +1,5 @@
+vi,0,1
+taliyah,0,1
+rumble,0,1
+corki,0,1
+rakan,0,1

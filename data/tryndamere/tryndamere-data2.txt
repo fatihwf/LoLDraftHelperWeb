@@ -1,0 +1,5 @@
+corki,1,0
+ziggs,1,0
+maokai,1,0
+renekton,1,0
+alistar,1,0

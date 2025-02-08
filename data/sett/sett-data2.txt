@@ -1,0 +1,5 @@
+corki,1,0
+sejuani,1,0
+ambessa,1,0
+leona,1,0
+missfortune,1,0

@@ -1,0 +1,13 @@
+vi,1,0
+jayce,1,0
+kalista,1,0
+braum,2,0
+akali,1,0
+jhin,0,1
+xinzhao,0,1
+aurora,1,1
+gragas,0,1
+alistar,0,1
+ksante,1,0
+missfortune,1,0
+wukong,1,0

@@ -1,0 +1,9 @@
+ksante,0,1
+ezreal,0,1
+alistar,0,1
+kindred,0,1
+azir,0,2
+jax,0,1
+ashe,0,1
+rell,0,1
+leesin,0,1

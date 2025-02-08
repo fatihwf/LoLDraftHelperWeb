@@ -1,0 +1,14 @@
+rumble,0,2
+missfortune,0,1
+viego,0,1
+leona,0,1
+yone,0,1
+corki,0,1
+taliyah,0,1
+nautilus,0,1
+annie,0,1
+jax,0,1
+galio,0,1
+wukong,0,1
+zeri,0,1
+lulu,0,1
