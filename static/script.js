@@ -39,19 +39,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 const fs = require('fs');
 const path = require('path');
-const https = require('https');
 
 function getChampionImagePath(champ) {
-    
-    
     // static/images klasöründe görsel var mı diye kontrol ediyoruz.
     let imagePath = path.join(__dirname, 'static', 'images', `${champ}.jpg`);
 
-    if (fs.existsSync(imagePath)) {
-        // Eğer görsel mevcutsa, dosya yolunu döndürüyoruz.
-        return imagePath;
-    }
+    // Dosya yolunu döndürüyoruz.
+    return imagePath;
 }
+
+module.exports = getChampionImagePath;
+
 
 
 function startDraft() {
