@@ -107,22 +107,40 @@ footer {
 .autocomplete-items {
     position: absolute;
     border: 1px solid #d4d4d4;
-    background-color: #fff;
+    border-bottom: none;
+    border-top: none;
     z-index: 99;
-    /* Öneri listesini giriş alanının hemen altına yerleştirir */
     top: 100%;
     left: 0;
     right: 0;
-    max-height: 200px;
-    overflow-y: auto;
-    box-sizing: border-box;
+    /* Genişliği giriş alanı ile aynı olması sağlanıyor */
 }
 
 .autocomplete-items div {
-    padding: 10px;
+    padding: 15px 15px;       /* Daha geniş ve yüksek bir kutu için padding artırıldı */
+    font-size: 20px;          /* Yazı boyutu büyütüldü */
     cursor: pointer;
+    background-color: #fff; 
+    border-bottom: 1px solid #d4d4d4; 
+    display: flex;            /* İçerikleri yatayda hizalamak için */
+    align-items: center;      /* Görseller ve metin dikeyde ortalanır */
 }
-
+.autocomplete-champion-img {
+    width: 40px;              /* Görsel boyutunu artırdık */
+    height: 40px;
+    margin-right: 10px;
+        
+}
 .autocomplete-items div:hover, .autocomplete-active {
-    background-color: #e9e9e9;
+    background-color: #e9e9e9; 
+}
+.champion-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.champion-img {
+    width: 50px; 
+    height: auto;
+    margin-right: 10px;
 }

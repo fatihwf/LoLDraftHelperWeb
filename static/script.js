@@ -31,6 +31,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+/**
+ * Verilen şampiyon ismine göre splash art URL'sini oluşturur.
+ * Şampiyon ismi: örn. "ahri" → "Ahri"
+ */
+let specialChampionsFile = ["ksante" ,"jarvaniv","kogmaw","leesin","missfortune","renataglasc","tahmkench","twistedfate"];  // Örnek: dosyadaki yazılış
+let specialChampionsURL  = ["KSante","JarvanIV","KogMaw","LeeSin","MissFortune","RenataGlasc","TahmKench","TwistedFate"];
+
+function getChampionImageUrl(champ) {
+    // Giriş değerini küçük harfe çevirip kontrol ediyoruz.
+    
+    let index = specialChampionsFile.indexOf(champ);
+    let champName;
+    
+    if (index !== -1) {
+        // Eğer şampiyon problemli listede bulunuyorsa, URL için özel yazımı kullan.
+        champName = specialChampionsURL[index];
+    } else {
+        // Aksi durumda, ilk harfi büyük hale getir.
+        champName = champ.charAt(0).toUpperCase() + champ.slice(1);
+    }
+    
+    return `https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/${champName}.png`;
+}
+
+
 function startDraft() {
     blueBans.push(document.getElementById('blue-ban1').value.toLowerCase());
     blueBans.push(document.getElementById('blue-ban2').value.toLowerCase());
@@ -45,11 +70,45 @@ function startDraft() {
     nextSelection();
 }
 
+/**
+ * Ban ve pick listelerini günceller; her şampiyon için görsel ve isim gösterilir.
+ */
 function updateSelectionStatus() {
-    const blueBansHTML = blueBans.map(champ => `<span>${champ}</span>`).join(', ');
-    const redBansHTML = redBans.map(champ => `<span>${champ}</span>`).join(', ');
-    const bluePicksHTML = bluePicks.map(champ => `<span>${champ}</span>`).join(', ');
-    const redPicksHTML = redPicks.map(champ => `<span>${champ}</span>`).join(', ');
+    const blueBansHTML = blueBans.map(champ => {
+        let champName = champ.charAt(0).toUpperCase() + champ.slice(1);
+        let imgUrl = getChampionImageUrl(champ);
+        return `<div class="champion-item">
+                    <img src="${imgUrl}" alt="${champName}" class="champion-img">
+                    <span>${champName}</span>
+                </div>`;
+    }).join('');
+
+    const redBansHTML = redBans.map(champ => {
+        let champName = champ.charAt(0).toUpperCase() + champ.slice(1);
+        let imgUrl = getChampionImageUrl(champ);
+        return `<div class="champion-item">
+                    <img src="${imgUrl}" alt="${champName}" class="champion-img">
+                    <span>${champName}</span>
+                </div>`;
+    }).join('');
+
+    const bluePicksHTML = bluePicks.map(champ => {
+        let champName = champ.charAt(0).toUpperCase() + champ.slice(1);
+        let imgUrl = getChampionImageUrl(champ);
+        return `<div class="champion-item">
+                    <img src="${imgUrl}" alt="${champName}" class="champion-img">
+                    <span>${champName}</span>
+                </div>`;
+    }).join('');
+
+    const redPicksHTML = redPicks.map(champ => {
+        let champName = champ.charAt(0).toUpperCase() + champ.slice(1);
+        let imgUrl = getChampionImageUrl(champ);
+        return `<div class="champion-item">
+                    <img src="${imgUrl}" alt="${champName}" class="champion-img">
+                    <span>${champName}</span>
+                </div>`;
+    }).join('');
 
     document.getElementById('selection-status').innerHTML = `
         <div class="flex-item blue-background">
@@ -107,7 +166,7 @@ function promptBanSelection(side) {
     // Otomatik tamamlama fonksiyonunu çağır
     autocomplete(document.getElementById('selection'), championList);
 
-    // Enter tuşuna basıldığında butonu tıklamayı tetikler
+    // Enter tuşuna basıldığında buton tıklamasını tetikle
     document.getElementById('selection').addEventListener('keyup', function (event) {
         if (event.key === 'Enter') {
             document.getElementById('next-selection-button').click();
@@ -146,7 +205,7 @@ function fetchPrediction(side) {
         let pickCount = pickCounter[side];
         let sideCap = side.charAt(0).toUpperCase() + side.slice(1);
 
-        // Burada skorları ve şampiyonları ayarlıyoruz
+        // Öneri verilerini alıyoruz
         let general = data.general.join('<br>');
         let synergy = data.synergy.join('<br>');
         let counter = data.counter.join('<br>');
@@ -166,7 +225,7 @@ function fetchPrediction(side) {
         // Otomatik tamamlama fonksiyonunu çağır
         autocomplete(document.getElementById('selection'), championList);
 
-        // Enter tuşuna basıldığında butonu tıklamayı tetikler
+        // Enter tuşuna basıldığında buton tıklamasını tetikle
         document.getElementById('selection').addEventListener('keyup', function (event) {
             if (event.key === 'Enter') {
                 document.getElementById('next-selection-button').click();
@@ -190,15 +249,51 @@ function summarize() {
     document.getElementById('selection-stage').style.display = 'none';
     document.getElementById('summary-stage').style.display = 'block';
 
+    const blueBansHTML = blueBans.map(champ => {
+        let champName = champ.charAt(0).toUpperCase() + champ.slice(1);
+        let imgUrl = getChampionImageUrl(champ);
+        return `<div class="champion-item">
+                    <img src="${imgUrl}" alt="${champName}" class="champion-img">
+                    <span>${champName}</span>
+                </div>`;
+    }).join('');
+
+    const redBansHTML = redBans.map(champ => {
+        let champName = champ.charAt(0).toUpperCase() + champ.slice(1);
+        let imgUrl = getChampionImageUrl(champ);
+        return `<div class="champion-item">
+                    <img src="${imgUrl}" alt="${champName}" class="champion-img">
+                    <span>${champName}</span>
+                </div>`;
+    }).join('');
+
+    const bluePicksHTML = bluePicks.map(champ => {
+        let champName = champ.charAt(0).toUpperCase() + champ.slice(1);
+        let imgUrl = getChampionImageUrl(champ);
+        return `<div class="champion-item">
+                    <img src="${imgUrl}" alt="${champName}" class="champion-img">
+                    <span>${champName}</span>
+                </div>`;
+    }).join('');
+
+    const redPicksHTML = redPicks.map(champ => {
+        let champName = champ.charAt(0).toUpperCase() + champ.slice(1);
+        let imgUrl = getChampionImageUrl(champ);
+        return `<div class="champion-item">
+                    <img src="${imgUrl}" alt="${champName}" class="champion-img">
+                    <span>${champName}</span>
+                </div>`;
+    }).join('');
+
     let selectedHTML = `
         <h3>Blue Bans:</h3>
-        <p>${blueBans.join(', ')}</p>
+        <div>${blueBansHTML}</div>
         <h3>Red Bans:</h3>
-        <p>${redBans.join(', ')}</p>
+        <div>${redBansHTML}</div>
         <h3>Blue Picks:</h3>
-        <p>${bluePicks.join(', ')}</p>
+        <div>${bluePicksHTML}</div>
         <h3>Red Picks:</h3>
-        <p>${redPicks.join(', ')}</p>
+        <div>${redPicksHTML}</div>
     `;
 
     document.getElementById('selected-champions').innerHTML = selectedHTML;
@@ -222,35 +317,40 @@ function autocomplete(inp, arr) {
     inp.addEventListener('input', function() {
         let a, b, i, val = this.value.toLowerCase();
 
-        /* Önceki açılmış öneri listelerini kapat */
+        // Önceki açılmış öneri listelerini kapat
         closeAllLists();
         if (!val) return false;
         currentFocus = -1;
 
-        /* Öneri öğelerini içerecek bir div oluştur */
+        // Öneri öğelerini içerecek bir div oluştur
         a = document.createElement('div');
         a.setAttribute('id', this.id + '-autocomplete-list');
         a.setAttribute('class', 'autocomplete-items');
 
-        /* Öneri listesini giriş alanının ebeveynine ekle */
+        // Öneri listesini giriş alanının ebeveynine ekle
         this.parentNode.appendChild(a);
 
-        /* Dizi içindeki her öğe için... */
+        // Dizi içindeki her öğe için
         for (i = 0; i < arr.length; i++) {
-            /* Öğenin, girilen değerle başladığını kontrol et */
+            // Öğenin, girilen değerle başladığını kontrol et
             if (arr[i].substr(0, val.length).toLowerCase() == val) {
-                /* Eşleşen öğe için bir div oluştur */
+                // Eşleşen öğe için bir div oluştur
                 b = document.createElement('div');
-                b.innerHTML = '<strong>' + arr[i].substr(0, val.length) + '</strong>';
-                b.innerHTML += arr[i].substr(val.length);
-                /* Mevcut öğenin değerini tutan gizli bir input ekle */
-                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
 
-                /* Öğeye tıklandığında ne olacağını tanımla */
+                // Şampiyonun görsel URL'sini al (champion ismini küçük harfe çeviriyoruz)
+                let imgUrl = getChampionImageUrl(arr[i].toLowerCase());
+
+                // HTML içeriğini güncelliyoruz:
+                // - Görsel: 30x30 px (görsel boyutunu stil ile ayarlayabilirsiniz)
+                // - İsim: girilen kısmı bold, kalan kısmı normal
+                // - Gizli input: öneri elemanındaki değeri saklar
+                b.innerHTML = "<img src='" + imgUrl + "' class='autocomplete-champion-img'>" +
+              "<span><strong>" + arr[i].substr(0, val.length) + "</strong>" + arr[i].substr(val.length) + "</span>" +
+              "<input type='hidden' value='" + arr[i] + "'>";
+
+                // Öğe tıklandığında, değeri input alanına aktar ve öneri listesini kapat
                 b.addEventListener('click', function(e) {
-                    /* Seçilen değeri giriş alanına aktar */
                     inp.value = this.getElementsByTagName('input')[0].value;
-                    /* Açık olan tüm öneri listelerini kapat */
                     closeAllLists();
                 });
                 a.appendChild(b);
@@ -263,18 +363,17 @@ function autocomplete(inp, arr) {
         let x = document.getElementById(this.id + '-autocomplete-list');
         if (x) x = x.getElementsByTagName('div');
         if (e.keyCode == 40) {
-            /* Aşağı tuşu */
+            // Aşağı tuşu
             currentFocus++;
             addActive(x);
         } else if (e.keyCode == 38) {
-            /* Yukarı tuşu */
+            // Yukarı tuşu
             currentFocus--;
             addActive(x);
         } else if (e.keyCode == 13) {
-            /* Enter tuşu */
+            // Enter tuşu
             e.preventDefault();
             if (currentFocus > -1) {
-                /* Mevcut öğe varsa, tıklayın */
                 if (x) x[currentFocus].click();
             }
         }
@@ -282,11 +381,9 @@ function autocomplete(inp, arr) {
 
     function addActive(x) {
         if (!x) return false;
-
         removeActive(x);
         if (currentFocus >= x.length) currentFocus = 0;
         if (currentFocus < 0) currentFocus = x.length - 1;
-
         x[currentFocus].classList.add('autocomplete-active');
     }
 
@@ -311,3 +408,4 @@ function autocomplete(inp, arr) {
         closeAllLists(e.target);
     });
 }
+
