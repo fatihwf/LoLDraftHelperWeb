@@ -345,7 +345,7 @@ function autocomplete(inp, arr) {
                 // - Görsel: 30x30 px (görsel boyutunu stil ile ayarlayabilirsiniz)
                 // - İsim: girilen kısmı bold, kalan kısmı normal
                 // - Gizli input: öneri elemanındaki değeri saklar
-                b.innerHTML = "<img src='" + imgUrl + "' class='autocomplete-champion-img'> style='width:30px; height:30px; margin-right:5px; vertical-align:middle;'>"  +
+                b.innerHTML = "<img src='" + imgUrl + "' class='autocomplete-champion-img'>" +
               "<span><strong>" + arr[i].substr(0, val.length) + "</strong>" + arr[i].substr(val.length) + "</span>" +
               "<input type='hidden' value='" + arr[i] + "'>";
 
