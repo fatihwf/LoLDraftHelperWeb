@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
  * Şampiyon ismi: örn. "ahri" → "Ahri"
  */
 
-let specialChampionsFile = ["ksante" ,"jarvaniv","kogmaw","leesin","missfortune","renataglasc","tahmkench","twistedfate","xinzhao"];  // Örnek: dosyadaki yazılış
-let specialChampionsURL  = ["KSante","JarvanIV","KogMaw","LeeSin","MissFortune","RenataGlasc","TahmKench","TwistedFate","XinZhao"];
+let specialChampionsFile = ["ksante" ,"jarvaniv","kogmaw","leesin","missfortune","renataglasc","tahmkench","twistedfate","xinzhao","wukong"];  // Örnek: dosyadaki yazılış
+let specialChampionsURL  = ["KSante","JarvanIV","KogMaw","LeeSin","MissFortune","Renata","TahmKench","TwistedFate","XinZhao","MonkeyKing"];
 
 
 function getChampionImageUrl(champ) {
@@ -56,7 +56,7 @@ function getChampionImageUrl(champ) {
     }
     
     let url = `https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/${champName}.png`;
-    
+    console.log("Şampiyon Görsel URL'si: " + url); // URL'yi konsola yazdırıyoruz.
     return url;
 }
 
@@ -103,39 +103,20 @@ function updateSelectionStatus() {
     const bluePicksHTML = bluePicks.map(champ => {
         let champName = champ.charAt(0).toUpperCase() + champ.slice(1);
         let imgUrl = getChampionImageUrl(champ);
-        return `<div class="champion-item">
-                    <img src="${imgUrl}" alt="${champName}" class="champion-img">
-                    <span>${champName}</span>
-                </div>`;
+        return `<div class="champion-item"><img src="${imgUrl}" alt="${champName}" class="champion-img"><span>${champName}</span></div>`;           
     }).join('');
 
     const redPicksHTML = redPicks.map(champ => {
         let champName = champ.charAt(0).toUpperCase() + champ.slice(1);
         let imgUrl = getChampionImageUrl(champ);
-        return `<div class="champion-item">
-                    <img src="${imgUrl}" alt="${champName}" class="champion-img">
-                    <span>${champName}</span>
-                </div>`;
+        return `<div class="champion-item"><img src="${imgUrl}" alt="${champName}" class="champion-img"><span>${champName}</span></div>`;
+                    
     }).join('');
 
-    document.getElementById('selection-status').innerHTML = `
-        <div class="flex-item blue-background">
-            <h3>Blue Bans:</h3>
-            ${blueBansHTML}
-        </div>
-        <div class="flex-item red-background">
-            <h3>Red Bans:</h3>
-            ${redBansHTML}
-        </div>
-        <div class="flex-item blue-background">
-            <h3>Blue Picks:</h3>
-            ${bluePicksHTML}
-        </div>
-        <div class="flex-item red-background">
-            <h3>Red Picks:</h3>
-            ${redPicksHTML}
-        </div>
-    `;
+    document.getElementById('selection-status').innerHTML = `<div class="flex-item blue-background"><h3>Blue Bans:</h3>${blueBansHTML}</div><div class="flex-item red-background"><h3>Red Bans:</h3>${redBansHTML}</div><div class="flex-item blue-background"><h3>Blue Picks:</h3>${bluePicksHTML}</div><div class="flex-item red-background"><h3>Red Picks:</h3>${redPicksHTML}</div>`;
+
+            
+
 }
 
 function nextSelection() {
@@ -146,9 +127,9 @@ function nextSelection() {
 
     let side = selectionOrder[currentSelection];
 
-    document.getElementById('selection-prompts').innerHTML = `
-        <div class="loading">Loading...</div>
-    `;
+    document.getElementById('selection-prompts').innerHTML = `<div class="loading">Loading...</div>`;
+        
+    
 
     // currentSelection'ı burada artırıyoruz
     currentSelection++;
@@ -164,12 +145,8 @@ function nextSelection() {
 
 function promptBanSelection(side) {
     let promptText = side + ':';
-    document.getElementById('selection-prompts').innerHTML = `
-        <div class="autocomplete">
-            <label for="selection">${promptText}</label>
-            <input type="text" id="selection" autocomplete="off">
-        </div>
-    `;
+    document.getElementById('selection-prompts').innerHTML = `<div class="autocomplete"><label for="selection">${promptText}</label><input type="text" id="selection" autocomplete="off"></div>`;
+        
 
     // Otomatik tamamlama fonksiyonunu çağır
     autocomplete(document.getElementById('selection'), championList);
@@ -352,9 +329,9 @@ function autocomplete(inp, arr) {
                 // - Görsel: 30x30 px (görsel boyutunu stil ile ayarlayabilirsiniz)
                 // - İsim: girilen kısmı bold, kalan kısmı normal
                 // - Gizli input: öneri elemanındaki değeri saklar
-                b.innerHTML = "<img src='" + imgUrl + "' class='autocomplete-champion-img'>" +
-              "<span><strong>" + arr[i].substr(0, val.length) + "</strong>" + arr[i].substr(val.length) + "</span>" +
-              "<input type='hidden' value='" + arr[i] + "'>";
+                b.innerHTML = "<img src='" + imgUrl + "' class='autocomplete-champion-img'>" + "<span><strong>" + arr[i].substr(0, val.length) + "</strong>" + arr[i].substr(val.length) + "</span>" +"<input type='hidden' value='" + arr[i] + "'>";
+             
+              
 
                 // Öğe tıklandığında, değeri input alanına aktar ve öneri listesini kapat
                 b.addEventListener('click', function(e) {
