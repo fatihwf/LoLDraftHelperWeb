@@ -186,6 +186,7 @@ def get_winrate_score(champ):
     print("Folders in DATA_DIR:", os.listdir(DATA_DIR))
 
     for folder in os.listdir(path):
+        print(folder)
         if folder.lower() == champ.lower():
             folder_path = os.path.join(path, folder)
             for file in os.listdir(folder_path):
