@@ -1,0 +1,8 @@
+Used Data:
+    "https://lol.fandom.com/wiki/TCL/2025_Season/Winter_Split/Picks_and_Bans",
+    "https://lol.fandom.com/wiki/LEC/2025_Season/Winter_Season/Picks_and_Bans",
+    "https://lol.fandom.com/wiki/LFL/2025_Season/Flash_In_Groups/Picks_and_Bans",
+    "https://lol.fandom.com/wiki/LCP/2025_Season/Season_Kickoff/Picks_and_Bans",
+    "https://lol.fandom.com/wiki/Esports_Balkan_League/2025_Season/Winter_Split/Picks_and_Bans",
+    "https://lol.fandom.com/wiki/Prime_League_1st_Division/2025_Season/Winter_Split/Picks_and_Bans",
+    "https://lol.fandom.com/wiki/LCK/2025_Season/Cup/Picks_and_Bans"
