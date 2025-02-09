@@ -201,10 +201,8 @@ def get_winrate_score(champ):
                                 l = int(parts[2])
                                 winrate_score = (w / (w+l)) * ((w+l) / (find_max_play_count()))
                                 break
-                        break
-
-                break
-            break
+                        
+            
     return winrate_score
 
 
