@@ -56,7 +56,7 @@ function getChampionImageUrl(champ) {
     }
     
     let url = `https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/${champName}.png`;
-    console.log("Şampiyon Görsel URL'si: " + url); // URL'yi konsola yazdırıyoruz.
+    
     return url;
 }
 
