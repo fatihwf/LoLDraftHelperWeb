@@ -181,12 +181,10 @@ def get_counter_score(champ,picked):
 
 def get_winrate_score(champ):
     path = DATA_DIR
-    print("DATA_DIR:", DATA_DIR)
-    print("Champion:", champ)
-    print("Folders in DATA_DIR:", os.listdir(DATA_DIR))
+
 
     for folder in os.listdir(path):
-        print(folder)
+
         if folder.lower() == champ.lower():
             folder_path = os.path.join(path, folder)
             for file in os.listdir(folder_path):
@@ -201,8 +199,8 @@ def get_winrate_score(champ):
                                 l = int(parts[2])
                                 winrate_score = (w / (w+l)) * ((w+l) / (find_max_play_count()))
                                 break
-                        
-            
+
+
     return winrate_score
 
 
