@@ -35,12 +35,12 @@ document.addEventListener('DOMContentLoaded', function() {
  * Verilen şampiyon ismine göre splash art URL'sini oluşturur.
  * Şampiyon ismi: örn. "ahri" → "Ahri"
  */
-let specialChampionsFile = ["ksante" ,"jarvaniv","kogmaw","leesin","missfortune","renataglasc","tahmkench","twistedfate"];  // Örnek: dosyadaki yazılış
-let specialChampionsURL  = ["KSante","JarvanIV","KogMaw","LeeSin","MissFortune","RenataGlasc","TahmKench","TwistedFate"];
+
 
 function getChampionImageUrl(champ) {
     // Giriş değerini küçük harfe çevirip kontrol ediyoruz.
-    
+    let specialChampionsFile = ["ksante" ,"jarvaniv","kogmaw","leesin","missfortune","renataglasc","tahmkench","twistedfate"];  // Örnek: dosyadaki yazılış
+    let specialChampionsURL  = ["KSante","JarvanIV","KogMaw","LeeSin","MissFortune","RenataGlasc","TahmKench","TwistedFate"];
     let index = specialChampionsFile.indexOf(champ);
     let champName;
     
