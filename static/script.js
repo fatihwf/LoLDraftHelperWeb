@@ -36,19 +36,31 @@ document.addEventListener('DOMContentLoaded', function() {
  * Şampiyon ismi: örn. "ahri" → "Ahri"
  */
 
+let specialChampionsFile = ["ksante" ,"jarvaniv","kogmaw","leesin","missfortune","renataglasc","tahmkench","twistedfate","xinzhao"];  // Örnek: dosyadaki yazılış
+let specialChampionsURL  = ["KSante","JarvanIV","KogMaw","LeeSin","MissFortune","RenataGlasc","TahmKench","TwistedFate","XinZhao"];
 
-const fs = require('fs');
-const path = require('path');
 
-function getChampionImagePath(champ) {
-    // static/images klasöründe görsel var mı diye kontrol ediyoruz.
-    let imagePath = path.join(__dirname, 'static', 'images', `${champ}.jpg`);
+function getChampionImageUrl(champ) {
+    // Giriş değerini küçük harfe çevirip kontrol ediyoruz.
+    
 
-    // Dosya yolunu döndürüyoruz.
-    return imagePath;
+    let index = specialChampionsFile.indexOf(champ);
+    let champName;
+    
+    if (index !== -1) {
+        // Eğer şampiyon problemli listede bulunuyorsa, URL için özel yazımı kullan.
+        champName = specialChampionsURL[index];
+    } else {
+        // Aksi durumda, ilk harfi büyük hale getir.
+        champName = champ.charAt(0).toUpperCase() + champ.slice(1);
+    }
+    
+    let url = `https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/${champName}.png`;
+    console.log("Şampiyon Görsel URL'si: " + url); // URL'yi konsola yazdırıyoruz.
+    return url;
 }
 
-module.exports = getChampionImagePath;
+
 
 
 
