@@ -53,8 +53,8 @@ function getChampionImageUrl(champ) {
         champName = champ.charAt(0).toUpperCase() + champ.slice(1);
     }
     
-    let url = `https://loldle.org/themes/xwm-loldleth/assets/images/champions/avatar/${champName}.png`
-    return url;
+    
+    return `https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/${champName}.png`;
 }
 
 
