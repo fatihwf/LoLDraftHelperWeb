@@ -41,6 +41,7 @@ function getChampionImageUrl(champ) {
     // Giriş değerini küçük harfe çevirip kontrol ediyoruz.
     let specialChampionsFile = ["ksante" ,"jarvaniv","kogmaw","leesin","missfortune","renataglasc","tahmkench","twistedfate"];  // Örnek: dosyadaki yazılış
     let specialChampionsURL  = ["KSante","JarvanIV","KogMaw","LeeSin","MissFortune","RenataGlasc","TahmKench","TwistedFate"];
+
     let index = specialChampionsFile.indexOf(champ);
     let champName;
     
@@ -51,8 +52,8 @@ function getChampionImageUrl(champ) {
         // Aksi durumda, ilk harfi büyük hale getir.
         champName = champ.charAt(0).toUpperCase() + champ.slice(1);
     }
-    
-    return `https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/${champName}.png`;
+    let url = `https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/${champName}.png`
+    return url;
 }
 
 
@@ -344,7 +345,7 @@ function autocomplete(inp, arr) {
                 // - Görsel: 30x30 px (görsel boyutunu stil ile ayarlayabilirsiniz)
                 // - İsim: girilen kısmı bold, kalan kısmı normal
                 // - Gizli input: öneri elemanındaki değeri saklar
-                b.innerHTML = "<img src='" + imgUrl + "' class='autocomplete-champion-img'>" +
+                b.innerHTML = "<img src='" + imgUrl + "' class='autocomplete-champion-img'> style='width:30px; height:30px; margin-right:5px; vertical-align:middle;'>"  +
               "<span><strong>" + arr[i].substr(0, val.length) + "</strong>" + arr[i].substr(val.length) + "</span>" +
               "<input type='hidden' value='" + arr[i] + "'>";
 
