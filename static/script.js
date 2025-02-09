@@ -52,7 +52,8 @@ function getChampionImageUrl(champ) {
         // Aksi durumda, ilk harfi büyük hale getir.
         champName = champ.charAt(0).toUpperCase() + champ.slice(1);
     }
-    let url = `https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/${champName}.png`
+    
+    let url = `https://loldle.org/themes/xwm-loldleth/assets/images/champions/avatar/${champName}.png`
     return url;
 }
 
