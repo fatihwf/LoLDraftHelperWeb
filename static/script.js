@@ -56,7 +56,7 @@ function getChampionImageUrl(champ) {
     }
     
     let url = `https://ddragon.leagueoflegends.com/cdn/15.3.1/img/champion/${champName}.png`;
-    console.log("Şampiyon Görsel URL'si: " + url); // URL'yi konsola yazdırıyoruz.
+    
     return url;
 }
 
@@ -297,100 +297,74 @@ function resetDraft() {
 }
 
 function autocomplete(inp, arr) {
-    let currentFocus;
+    // Artık ok tuşlarıyla gezinme için currentFocus değişkenine gerek yok
+    // let currentFocus;
 
+    // Input alanına yazı girildiğinde öneri listesini oluşturur.
     inp.addEventListener('input', function() {
         let a, b, i, val = this.value.toLowerCase();
-
-        // Önceki açılmış öneri listelerini kapat
         closeAllLists();
         if (!val) return false;
-        currentFocus = -1;
-
-        // Öneri öğelerini içerecek bir div oluştur
+        
+        // Öneri listesini içerecek bir div oluştur
         a = document.createElement('div');
         a.setAttribute('id', this.id + '-autocomplete-list');
         a.setAttribute('class', 'autocomplete-items');
-
-        // Öneri listesini giriş alanının ebeveynine ekle
         this.parentNode.appendChild(a);
-
-        // Dizi içindeki her öğe için
+    
+        // Dizideki her bir eleman için
         for (i = 0; i < arr.length; i++) {
-            // Öğenin, girilen değerle başladığını kontrol et
-            if (arr[i].substr(0, val.length).toLowerCase() == val) {
+            if (arr[i].substr(0, val.length).toLowerCase() === val) {
                 // Eşleşen öğe için bir div oluştur
                 b = document.createElement('div');
-
-                // Şampiyonun görsel URL'sini al (champion ismini küçük harfe çeviriyoruz)
                 let imgUrl = getChampionImageUrl(arr[i].toLowerCase());
-
-                // HTML içeriğini güncelliyoruz:
-                // - Görsel: 30x30 px (görsel boyutunu stil ile ayarlayabilirsiniz)
-                // - İsim: girilen kısmı bold, kalan kısmı normal
-                // - Gizli input: öneri elemanındaki değeri saklar
-                b.innerHTML = "<img src='" + imgUrl + "' class='autocomplete-champion-img'>" + "<span><strong>" + arr[i].substr(0, val.length) + "</strong>" + arr[i].substr(val.length) + "</span>" +"<input type='hidden' value='" + arr[i] + "'>";
-             
-              
-
-                // Öğe tıklandığında, değeri input alanına aktar ve öneri listesini kapat
+                b.innerHTML = "<img src='" + imgUrl + "' class='autocomplete-champion-img'>" +
+                              "<span><strong>" + arr[i].substr(0, val.length) + "</strong>" +
+                              arr[i].substr(val.length) + "</span>" +
+                              "<input type='hidden' value='" + arr[i] + "'>";
+    
+                // Tıklanırsa, inputa değeri aktarır ve öneri listesini kapatır
                 b.addEventListener('click', function(e) {
                     inp.value = this.getElementsByTagName('input')[0].value;
                     closeAllLists();
+                    inp.focus(); // Seçim sonrası input odakta kalsın
                 });
                 a.appendChild(b);
             }
         }
     });
-
-    /* Klavye tuşları ile gezinmeyi yönet */
+    
+    // Sadece Enter tuşu için bir handler ekliyoruz; ok tuşlarıyla gezinme kaldırıldı.
     inp.addEventListener('keydown', function(e) {
-        let x = document.getElementById(this.id + '-autocomplete-list');
-        if (x) x = x.getElementsByTagName('div');
-        if (e.keyCode == 40) {
-            // Aşağı tuşu
-            currentFocus++;
-            addActive(x);
-        } else if (e.keyCode == 38) {
-            // Yukarı tuşu
-            currentFocus--;
-            addActive(x);
-        } else if (e.keyCode == 13) {
-            // Enter tuşu
+        if (e.keyCode === 13) {
             e.preventDefault();
-            if (currentFocus > -1) {
-                if (x) x[currentFocus].click();
+            let x = document.getElementById(this.id + '-autocomplete-list');
+            if (x) {
+                x = x.getElementsByTagName('div');
+                // Eğer listede en az bir öğe varsa, ilk öğeyi seçelim
+                if (x.length > 0) {
+                    x[0].click();
+                }
             }
         }
     });
-
-    function addActive(x) {
-        if (!x) return false;
-        removeActive(x);
-        if (currentFocus >= x.length) currentFocus = 0;
-        if (currentFocus < 0) currentFocus = x.length - 1;
-        x[currentFocus].classList.add('autocomplete-active');
-    }
-
-    function removeActive(x) {
-        for (let i = 0; i < x.length; i++) {
-            x[i].classList.remove('autocomplete-active');
-        }
-    }
-
+    
+    // Açık olan tüm öneri listelerini kapatır
     function closeAllLists(elmnt) {
         let x = document.getElementsByClassName('autocomplete-items');
         for (let i = 0; i < x.length; i++) {
-            if (elmnt != x[i] && elmnt != inp) {
+            if (elmnt !== x[i] && elmnt !== inp) {
                 if (x[i] && x[i].parentNode) {
                     x[i].parentNode.removeChild(x[i]);
                 }
             }
         }
     }
-
+    
+    // Sayfada herhangi bir yere tıklandığında öneri listesini kapatır
     document.addEventListener('click', function(e) {
         closeAllLists(e.target);
     });
 }
+
 
