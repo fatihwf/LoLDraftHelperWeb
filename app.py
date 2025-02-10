@@ -242,7 +242,7 @@ def predict_red(blue_bans, red_bans, blue_picked, red_picked):
                     counter_score = get_counter_score(folder, blue_picked)
                     best_counter.append((folder, counter_score))
                     winrate_score = get_winrate_score(folder)
-                    general_points = synergy_score/5 + counter_score/5 + winrate_score
+                    general_points = synergy_score/3 + counter_score/3 + winrate_score
                     best_general.append((folder, general_points))
     best_general.sort(key=lambda x: x[1], reverse=True)
     best_synergy.sort(key=lambda x: x[1], reverse=True)
@@ -275,7 +275,7 @@ def predict_blue(blue_bans, red_bans, blue_picked, red_picked):
                     best_counter.append((folder, counter_score))
 
                     winrate_score = get_winrate_score(folder)
-                    general_points = synergy_score/5 + counter_score/5 + winrate_score
+                    general_points = synergy_score/3 + counter_score/3 + winrate_score
                     best_general.append((folder, general_points))
 
     best_general.sort(key=lambda x: x[1], reverse=True)
