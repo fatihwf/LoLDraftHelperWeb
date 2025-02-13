@@ -1,0 +1,10 @@
+vi,0,1
+elise,0,1
+jayce,0,1
+ahri,0,1
+ashe,0,1
+rumble,0,1
+xayah,0,1
+rakan,0,1
+pantheon,0,1
+aurora,0,1

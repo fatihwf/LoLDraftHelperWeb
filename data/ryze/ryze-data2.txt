@@ -1,0 +1,5 @@
+ambessa,0,1
+vi,0,1
+ezreal,0,1
+hwei,0,1
+poppy,0,1

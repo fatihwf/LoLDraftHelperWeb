@@ -1,0 +1,5 @@
+ksante,1,0
+maokai,1,0
+jhin,1,0
+cassiopeia,1,0
+elise,1,0

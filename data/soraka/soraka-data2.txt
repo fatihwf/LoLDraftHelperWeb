@@ -1,0 +1,5 @@
+kalista,0,1
+renataglasc,0,1
+taliyah,0,1
+amumu,0,1
+olaf,0,1

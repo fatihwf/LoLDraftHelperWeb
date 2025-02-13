@@ -1,0 +1,5 @@
+draven,0,1
+skarner,0,1
+soraka,0,1
+zoe,0,1
+akali,0,1

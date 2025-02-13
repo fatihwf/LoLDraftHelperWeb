@@ -1,0 +1,8 @@
+vi,0,1
+rakan,0,1
+orianna,1,1
+sivir,1,1
+sion,0,1
+maokai,1,0
+ambessa,1,0
+leona,1,0

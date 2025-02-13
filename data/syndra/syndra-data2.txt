@@ -1,0 +1,16 @@
+ambessa,1,0
+sejuani,2,0
+azir,1,0
+leona,1,0
+missfortune,1,0
+jhin,1,0
+gnar,1,0
+katarina,1,0
+xinzhao,1,1
+renataglasc,1,1
+hwei,1,1
+ashe,0,1
+malphite,0,1
+ksante,1,0
+caitlyn,1,0
+elise,1,0

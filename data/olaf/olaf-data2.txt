@@ -1,0 +1,10 @@
+corki,0,1
+maokai,0,1
+ksante,0,1
+rell,0,1
+hwei,0,1
+draven,1,0
+skarner,1,0
+soraka,1,0
+zoe,1,0
+akali,1,0

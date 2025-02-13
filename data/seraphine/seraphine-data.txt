@@ -1,0 +1,16 @@
+ksante,1,0
+varus,1,0
+sejuani,1,0
+seraphine,2,3
+orianna,1,0
+ambessa,0,2
+wukong,0,1
+senna,0,1
+chogath,0,1
+corki,1,2
+vi,0,1
+leona,1,1
+xinzhao,1,0
+rumble,1,1
+ashe,0,1
+maokai,0,1

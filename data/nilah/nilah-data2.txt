@@ -1,0 +1,10 @@
+varus,1,0
+vi,1,0
+ambessa,1,0
+rakan,1,0
+galio,1,0
+ezreal,0,1
+ksante,0,1
+leona,0,1
+orianna,0,1
+nocturne,0,1

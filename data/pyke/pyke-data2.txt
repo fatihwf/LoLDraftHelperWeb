@@ -1,0 +1,10 @@
+jayce,0,1
+xinzhao,0,1
+azir,0,1
+ezreal,0,1
+alistar,0,1
+elise,1,0
+anivia,1,0
+yone,1,0
+viego,1,0
+ashe,1,0

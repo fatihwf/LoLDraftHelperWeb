@@ -1,0 +1,13 @@
+renekton,1,0
+maokai,1,0
+syndra,3,1
+rakan,1,1
+kaisa,1,0
+varus,1,0
+kennen,1,0
+pantheon,1,0
+viego,2,1
+missfortune,0,1
+jayce,1,1
+jhin,1,0
+karma,1,0

@@ -1,0 +1,8 @@
+kalista,1,1
+sejuani,0,1
+olaf,1,1
+cassiopeia,0,1
+leona,0,1
+renataglasc,1,0
+taliyah,1,0
+amumu,1,0

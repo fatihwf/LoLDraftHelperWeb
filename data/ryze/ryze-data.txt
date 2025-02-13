@@ -1,0 +1,5 @@
+ksante,0,1
+corki,0,1
+nocturne,0,1
+rell,0,1
+ryze,0,1

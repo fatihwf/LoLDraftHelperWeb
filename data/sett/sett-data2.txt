@@ -1,0 +1,8 @@
+corki,2,0
+zyra,1,0
+ambessa,2,0
+ziggs,1,0
+nautilus,1,0
+sejuani,1,0
+leona,1,0
+missfortune,1,0
