@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
 from flask import Flask, request, jsonify, render_template
+from webdriver_manager.chrome import ChromeDriverManager
 
 app = Flask(__name__)
 
@@ -38,7 +39,8 @@ def update_data():
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
 
-    driver = webdriver.Chrome(options=chrome_options)
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
 
     urls = [
         "https://lol.fandom.com/wiki/TCL/2025_Season/Winter_Split/Picks_and_Bans",
@@ -145,6 +147,101 @@ def update_data():
             # Listeleri temizleme
             blue_list.clear()
             red_list.clear()
+    for url in urls:
+
+        driver.get(url)
+
+        # Tablonun bulunduğu öğeyi bulma
+        try:
+            table = WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located((By.ID, "pbh-table"))
+            )
+        except:
+            print(f"Tablo bulunamadı: {url}")
+            continue  # Tablo bulunamazsa bir sonraki URL'ye geç
+
+        # Tablo içindeki tüm <tr> öğelerini alma
+        rows = table.find_elements(By.TAG_NAME, "tr")
+
+        # İlk 2 ve son 2 <tr> öğelerini hariç tutarak diğerlerini kontrol etme
+        rows_to_process = rows[2:]  # İlk 2 öğeyi atla, geri kalan hepsini al
+
+        for row in rows_to_process:
+            # Row içindeki tüm <td> öğelerini al
+            tds = row.find_elements(By.TAG_NAME, "td")
+
+            # Listeleri tanımlama
+            blue_list = []
+            red_list = []
+
+            # Kazananı belirleme
+            winner = None
+            if len(tds) >= 3:
+                if "pbh-winner" in tds[1].get_attribute("class"):
+                    winner = "blue"  # İkinci <td> kazanan ise blue
+                elif "pbh-winner" in tds[2].get_attribute("class"):
+                    winner = "red"  # Üçüncü <td> kazanan ise red
+
+            # Her bir <td> için sınıf kontrolü yapma
+            for td in tds:
+                td_class = td.get_attribute("class")
+                data_c1 = td.get_attribute("data-c1")
+                data_c2 = td.get_attribute("data-c2")
+
+                if "pbh-ban" in td_class:
+                    continue  # Eğer pbh-ban sınıfı varsa, bu öğeyi atla
+
+                if "pbh-blue" in td_class and data_c1:  # pbh-blue sınıfı ve data-c1 varsa
+                    blue_list.append(data_c1)
+                    if data_c2:
+                        blue_list.append(data_c2)
+
+                elif "pbh-red" in td_class and data_c1:  # pbh-red sınıfı ve data-c1 varsa
+                    red_list.append(data_c1)
+                    if data_c2:
+                        red_list.append(data_c2)
+
+            # Kazanan belirlendiyse dosya işlemleri
+            if winner:
+                # Blue listesi için dosya işlemleri
+                for champion in blue_list:
+
+                    # Klasör oluşturma
+                    folder_name = os.path.join(DATA_DIR, champion)
+                    if not os.path.exists(folder_name):
+                        os.makedirs(folder_name)
+
+                    # Dosya adı
+                    file_name = os.path.join(folder_name, f"{champion}-data2.txt")
+
+                    with open(file_name, 'a') as f:  # 'a' modunu kullanıyoruz
+                        for other_champion in red_list:
+                            if winner == "blue":
+                                f.write(f"{other_champion}-W\n")
+                            elif winner == "red":
+                                f.write(f"{other_champion}-L\n")
+
+                # Red listesi için dosya işlemleri
+                for champion in red_list:
+                    # Klasör oluşturma
+                    folder_name = os.path.join(DATA_DIR, champion)
+                    if not os.path.exists(folder_name):
+                        os.makedirs(folder_name)
+
+                    # Dosya adı
+                    file_name = os.path.join(folder_name, f"{champion}-data2.txt")
+
+                    # Dosya yoksa oluşturma
+                    with open(file_name, 'a') as f:  # 'a' modunu kullanıyoruz
+                        for other_champion in blue_list:
+                            if winner == "blue":
+                                f.write(f"{other_champion}-L\n")
+                            elif winner == "red":
+                                f.write(f"{other_champion}-W\n")
+
+            # Listeleri temizleme
+            blue_list.clear()
+            red_list.clear()
 
     from collections import defaultdict
 
@@ -236,8 +333,10 @@ def update_data():
     for url in role_urls:
         driver.get(url)
 
-        table = driver.find_element(By.CSS_SELECTOR, "div.table-wide-inner")
-
+        table = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "table-wide"))
+        )
+        
         # Class'ı "rune-line" ile başlayan tüm <tr> öğelerini bulmak için XPath kullanıyoruz
         rows = table.find_elements(By.XPATH, ".//tr[starts-with(@class, 'rune-line')]")
 
@@ -602,12 +701,11 @@ def predict():
 
 
 if __name__ == '__main__':
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=update_data, trigger="interval", hours=72)
+    scheduler.start()
+    atexit.register(lambda: scheduler.shutdown())
 
 
     app.run(debug=True)
-    update_data()
 
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(func=update_data, trigger="interval", hours=24)
-    scheduler.start()
-    atexit.register(lambda: scheduler.shutdown())
