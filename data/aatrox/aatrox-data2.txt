@@ -1,0 +1,15 @@
+kalista,1,0
+maokai,1,0
+renataglasc,1,0
+azir,1,0
+renekton,1,0
+nocturne,0,1
+sylas,0,1
+galio,0,1
+tahmkench,0,1
+senna,0,1
+caitlyn,0,1
+jax,0,1
+karma,0,1
+ahri,0,1
+viego,0,1
