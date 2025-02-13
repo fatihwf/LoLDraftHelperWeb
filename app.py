@@ -26,11 +26,15 @@ def update_data():
 
         with open(file_name2, 'w') as f:
             f.write("")
-            
+
     chrome_driver_path = os.path.join(BASE_DIR, "chromedriver")
 
-    service = Service(chrome_driver_path)
-    driver = webdriver.Chrome(service=service)
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+
+    driver = webdriver.Chrome(options=chrome_options)
 
     urls = [
         "https://lol.fandom.com/wiki/TCL/2025_Season/Winter_Split/Picks_and_Bans",
