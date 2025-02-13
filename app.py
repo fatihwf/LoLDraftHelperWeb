@@ -17,6 +17,7 @@ DATA_DIR = os.path.join(BASE_DIR, 'data')
 
 
 def update_data():
+    print("update data calisiyor")
     for folder in os.listdir(DATA_DIR):
         folder_path = os.path.join(DATA_DIR, folder)
         file_name = os.path.join(folder_path, f"{folder}-data.txt")
