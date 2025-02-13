@@ -1,0 +1,8 @@
+corki,0,2
+diana,0,2
+varus,0,1
+poppy,0,1
+ornn,0,1
+elise,0,1
+aatrox,0,1
+yasuo,0,1

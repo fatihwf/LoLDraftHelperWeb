@@ -1,0 +1,17 @@
+corki,0,2
+nautilus,1,1
+gwen,1,4
+xinzhao,0,1
+aurora,0,1
+varus,1,1
+vi,0,1
+rakan,0,1
+taliyah,1,1
+kindred,1,0
+wukong,0,1
+alistar,0,1
+azir,0,1
+ivern,0,1
+jayce,0,1
+braum,0,1
+ashe,0,1

@@ -1,0 +1,12 @@
+rumble,1,0
+maokai,1,0
+jinx,1,0
+tristana,1,0
+blitzcrank,1,2
+ksante,0,1
+vi,0,1
+aurora,0,1
+ezreal,0,2
+corki,0,1
+nidalee,0,1
+sion,0,1

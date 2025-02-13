@@ -1,0 +1,15 @@
+rumble,0,1
+corki,1,2
+wukong,1,1
+viktor,0,2
+bard,2,4
+zyra,1,1
+jayce,1,0
+azir,2,1
+jhin,1,1
+ambessa,1,1
+caitlyn,0,1
+poppy,0,1
+jax,0,2
+vi,0,1
+ashe,0,1

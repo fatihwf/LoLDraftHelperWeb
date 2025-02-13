@@ -1,0 +1,12 @@
+corki,0,1
+skarner,0,1
+braum,0,1
+jax,0,1
+anivia,1,2
+elise,1,1
+yone,0,1
+viego,0,1
+ashe,0,1
+galio,1,0
+xinzhao,1,0
+ezreal,1,0

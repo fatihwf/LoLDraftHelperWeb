@@ -1,0 +1,5 @@
+corki,1,0
+taliyah,1,0
+nautilus,1,0
+annie,1,0
+jax,1,0

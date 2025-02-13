@@ -1,0 +1,13 @@
+maokai,1,0
+corki,1,1
+rell,1,0
+jhin,1,0
+rumble,1,1
+skarner,0,1
+azir,0,1
+alistar,0,1
+xinzhao,0,1
+renataglasc,0,1
+kalista,0,1
+gragas,0,1
+ambessa,0,1

@@ -1,0 +1,12 @@
+varus,1,1
+ksante,1,0
+alistar,1,0
+brand,1,2
+smolder,1,0
+viktor,0,1
+kalista,0,1
+rell,0,1
+gnar,0,1
+nautilus,0,1
+renekton,0,1
+yasuo,0,1

@@ -1,0 +1,12 @@
+ksante,1,0
+ambessa,2,0
+amumu,4,0
+leona,2,0
+varus,1,0
+kalista,1,0
+renataglasc,2,0
+taliyah,1,0
+olaf,1,0
+ezreal,2,0
+azir,2,0
+jayce,1,0

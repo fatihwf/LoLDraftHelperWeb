@@ -1,0 +1,10 @@
+ezreal,0,1
+zyra,0,1
+rell,0,1
+yone,0,1
+gnar,0,1
+caitlyn,0,1
+jax,0,1
+karma,0,1
+ahri,0,1
+viego,0,1

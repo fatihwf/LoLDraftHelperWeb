@@ -1,0 +1,10 @@
+vi,0,1
+ksante,0,1
+viktor,0,1
+xayah,0,1
+rakan,0,1
+sejuani,1,0
+camille,1,0
+orianna,1,0
+senna,1,0
+ornn,1,0

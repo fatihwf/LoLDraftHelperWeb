@@ -1,0 +1,16 @@
+corki,2,0
+ksante,1,0
+lillia,1,0
+draven,4,1
+rell,3,0
+viktor,2,0
+xinzhao,2,0
+leona,1,0
+jayce,1,0
+zyra,1,0
+gragas,1,0
+poppy,1,0
+skarner,0,1
+soraka,0,1
+zoe,0,1
+akali,0,1
