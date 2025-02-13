@@ -601,11 +601,12 @@ def predict():
 
 
 if __name__ == '__main__':
+
+
+    app.run(debug=True)
     update_data()
 
     scheduler = BackgroundScheduler()
     scheduler.add_job(func=update_data, trigger="interval", hours=24)
     scheduler.start()
     atexit.register(lambda: scheduler.shutdown())
-    
-    app.run(debug=True)
