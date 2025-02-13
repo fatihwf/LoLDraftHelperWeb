@@ -1,0 +1,15 @@
+galio,2,1
+nocturne,1,0
+akali,1,0
+zeri,2,0
+lulu,2,1
+corki,0,1
+ezreal,0,1
+lillia,0,1
+ornn,0,1
+rakan,0,1
+wukong,1,0
+sylas,1,0
+jayce,0,1
+xinzhao,0,1
+jinx,0,1

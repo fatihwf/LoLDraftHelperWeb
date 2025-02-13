@@ -1,0 +1,13 @@
+kalista,0,2
+maokai,0,1
+renataglasc,0,2
+hwei,0,1
+gnar,0,1
+caitlyn,0,1
+jax,0,1
+karma,0,1
+ahri,0,1
+viego,0,1
+xinzhao,0,1
+gragas,0,1
+ambessa,0,1

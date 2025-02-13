@@ -1,0 +1,14 @@
+orianna,0,1
+wukong,0,1
+gnar,0,1
+missfortune,0,2
+zilean,0,1
+maokai,1,0
+aurora,1,0
+xayah,1,0
+nautilus,1,0
+aatrox,1,0
+xinzhao,0,1
+ambessa,0,1
+sylas,0,1
+rell,0,1

@@ -1,0 +1,5 @@
+gnar,1,0
+varus,1,0
+zyra,1,0
+nautilus,1,0
+velkoz,1,0

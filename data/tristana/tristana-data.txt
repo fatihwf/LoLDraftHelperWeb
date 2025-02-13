@@ -1,0 +1,16 @@
+rumble,2,0
+sejuani,1,0
+yone,1,0
+renataglasc,1,0
+tristana,2,2
+nidalee,0,1
+renekton,0,1
+zeri,0,1
+rell,0,1
+maokai,1,0
+jinx,1,0
+blitzcrank,1,0
+vi,0,1
+aurora,0,1
+rakan,0,1
+ornn,0,1

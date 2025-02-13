@@ -1,0 +1,5 @@
+galio,0,1
+rumble,0,1
+wukong,0,1
+zeri,0,1
+lulu,0,1

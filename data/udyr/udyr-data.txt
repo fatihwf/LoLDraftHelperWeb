@@ -1,0 +1,5 @@
+leesin,0,1
+hwei,0,1
+jinx,0,1
+udyr,0,1
+thresh,0,1

@@ -1,0 +1,8 @@
+vi,0,1
+gnar,0,1
+rakan,0,2
+missfortune,0,1
+xerath,0,2
+rumble,0,1
+wukong,0,1
+corki,0,1
