@@ -17,6 +17,16 @@ DATA_DIR = os.path.join(BASE_DIR, 'data')
 
 
 def update_data():
+    for folder in os.listdir(DATA_DIR):
+        folder_path = os.path.join(DATA_DIR, folder)
+        file_name = os.path.join(folder_path, f"{folder}-data.txt")
+        file_name2 = os.path.join(folder_path, f"{folder}-data2.txt")
+        with open(file_name, 'w') as f:
+            f.write("")
+
+        with open(file_name2, 'w') as f:
+            f.write("")
+            
     chrome_driver_path = os.path.join(BASE_DIR, "chromedriver")
 
     service = Service(chrome_driver_path)
