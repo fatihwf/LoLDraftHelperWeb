@@ -1,9 +1,0 @@
-ezreal,2,0
-vi,2,0
-leona,2,0
-chogath,2,1
-ahri,2,0
-ambessa,0,1
-seraphine,0,1
-wukong,0,1
-senna,0,1

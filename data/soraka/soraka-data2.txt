@@ -1,5 +1,0 @@
-maokai,0,1
-draven,0,1
-renataglasc,0,1
-ambessa,0,1
-taliyah,0,1

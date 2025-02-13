@@ -1,5 +1,0 @@
-kalista,0,1
-vi,0,1
-soraka,0,1
-ksante,0,1
-viktor,0,1

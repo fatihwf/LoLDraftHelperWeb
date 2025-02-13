@@ -1,8 +1,0 @@
-ezreal,1,0
-sejuani,1,0
-nautilus,1,1
-hwei,1,0
-aatrox,1,1
-maokai,0,1
-aurora,0,1
-xayah,0,1

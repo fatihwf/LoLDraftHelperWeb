@@ -1,5 +1,0 @@
-ambessa,1,0
-seraphine,1,0
-wukong,1,0
-senna,1,0
-chogath,1,0

@@ -1,5 +1,0 @@
-varus,1,0
-vi,1,0
-ambessa,1,0
-rakan,1,0
-galio,1,0

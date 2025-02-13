@@ -1,5 +1,0 @@
-xinzhao,1,0
-kalista,1,0
-neeko,1,0
-renekton,1,0
-galio,1,0

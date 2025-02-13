@@ -1,5 +1,0 @@
-maokai,1,0
-azir,1,0
-ashe,1,0
-rell,1,0
-gangplank,1,0

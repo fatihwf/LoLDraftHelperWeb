@@ -1,8 +1,0 @@
-rumble,0,1
-nocturne,0,1
-orianna,0,2
-sivir,0,2
-rell,0,1
-vi,0,1
-rakan,0,1
-sion,0,1

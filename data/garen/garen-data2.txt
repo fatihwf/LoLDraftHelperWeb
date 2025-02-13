@@ -1,8 +1,0 @@
-viktor,1,0
-sejuani,1,0
-ksante,2,0
-zeri,1,0
-rell,2,0
-nocturne,1,0
-jhin,1,0
-taliyah,1,0

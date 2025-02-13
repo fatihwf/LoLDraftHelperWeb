@@ -1,5 +1,0 @@
-ambessa,1,0
-jayce,1,0
-zyra,1,0
-ezreal,1,0
-nautilus,1,0

@@ -1,5 +1,0 @@
-nidalee,1,0
-kaisa,1,0
-poppy,1,0
-tryndamere,1,0
-gnar,1,0

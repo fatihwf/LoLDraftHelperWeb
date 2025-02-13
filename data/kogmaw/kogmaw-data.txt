@@ -1,5 +1,0 @@
-renataglasc,0,1
-wukong,0,1
-ahri,0,1
-jax,0,1
-kogmaw,0,1

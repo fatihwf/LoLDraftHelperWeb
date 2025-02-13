@@ -1,9 +1,0 @@
-orianna,1,0
-wukong,1,0
-gnar,1,0
-missfortune,1,0
-zilean,2,0
-pantheon,1,0
-rumble,1,0
-ezreal,1,0
-elise,1,0

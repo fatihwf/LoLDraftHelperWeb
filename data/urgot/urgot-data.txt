@@ -1,9 +1,0 @@
-corki,0,1
-jarvaniv,0,1
-rell,0,1
-orianna,0,1
-urgot,0,2
-varus,0,1
-galio,0,1
-xinzhao,0,1
-lulu,0,1

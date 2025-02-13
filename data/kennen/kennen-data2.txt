@@ -1,5 +1,0 @@
-jhin,1,0
-gnar,1,0
-katarina,1,0
-xinzhao,1,0
-renataglasc,1,0

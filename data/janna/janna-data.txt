@@ -1,5 +1,0 @@
-ambessa,0,1
-wukong,0,1
-varus,0,1
-aurora,0,1
-janna,0,1

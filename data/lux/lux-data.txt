@@ -1,7 +1,0 @@
-ksante,1,0
-caitlyn,2,0
-lux,2,0
-galio,2,0
-kindred,1,0
-xinzhao,1,0
-azir,1,0

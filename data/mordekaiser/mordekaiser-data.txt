@@ -1,5 +1,0 @@
-rell,1,0
-sejuani,1,0
-yone,1,0
-mordekaiser,1,0
-missfortune,1,0

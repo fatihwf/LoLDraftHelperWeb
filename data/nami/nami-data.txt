@@ -1,5 +1,0 @@
-rumble,0,1
-sejuani,0,1
-corki,0,1
-lucian,0,1
-nami,0,1

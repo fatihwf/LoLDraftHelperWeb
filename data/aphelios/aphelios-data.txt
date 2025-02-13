@@ -1,5 +1,0 @@
-wukong,0,1
-aurora,0,1
-galio,0,1
-rell,0,1
-aphelios,0,1

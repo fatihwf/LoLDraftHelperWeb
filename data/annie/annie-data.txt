@@ -1,9 +1,0 @@
-aurora,0,1
-kalista,0,1
-annie,1,1
-nocturne,0,1
-alistar,0,1
-corki,1,0
-taliyah,1,0
-nautilus,1,0
-jax,1,0

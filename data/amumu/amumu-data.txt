@@ -1,9 +1,0 @@
-jayce,1,0
-ezreal,1,0
-amumu,2,0
-gnar,1,0
-nautilus,1,0
-ksante,1,0
-ambessa,1,0
-leona,1,0
-varus,1,0
