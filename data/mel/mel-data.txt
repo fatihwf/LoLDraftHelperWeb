@@ -1,0 +1,5 @@
+sejuani,0,1
+missfortune,0,1
+mel,0,1
+irelia,0,1
+leblanc,0,1

@@ -1,0 +1,15 @@
+varus,1,0
+taliyah,1,0
+nautilus,1,0
+gwen,1,0
+kindred,3,1
+ksante,1,0
+ezreal,1,1
+alistar,1,0
+azir,1,0
+leona,0,1
+galio,1,1
+akali,0,1
+ambessa,1,0
+ziggs,1,0
+rell,1,0

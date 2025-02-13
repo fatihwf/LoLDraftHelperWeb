@@ -1,0 +1,5 @@
+viego,1,0
+rakan,1,0
+missfortune,1,0
+syndra,1,0
+jayce,1,0

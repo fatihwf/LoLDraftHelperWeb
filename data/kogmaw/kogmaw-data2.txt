@@ -1,0 +1,5 @@
+kalista,0,1
+neeko,0,1
+sejuani,0,1
+gnar,0,1
+taliyah,0,1

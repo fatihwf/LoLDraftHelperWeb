@@ -1,0 +1,17 @@
+ksante,2,0
+corki,2,0
+braum,2,0
+maokai,1,0
+leblanc,1,0
+jarvaniv,1,0
+rell,1,0
+orianna,1,0
+urgot,1,0
+vi,0,1
+viktor,0,1
+rakan,0,1
+poppy,0,1
+kaisa,0,1
+jinx,1,0
+viego,1,0
+sylas,1,0

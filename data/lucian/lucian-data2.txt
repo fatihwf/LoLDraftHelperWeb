@@ -1,0 +1,5 @@
+xinzhao,0,1
+galio,0,1
+azir,0,1
+caitlyn,0,1
+lux,0,1
