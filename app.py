@@ -268,10 +268,7 @@ def update_data():
                         with open(file_name, 'a') as f:
                             f.write(f",{position}")
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(func=update_data, trigger="interval", hours=24)
-scheduler.start()
-atexit.register(lambda: scheduler.shutdown())
+
 
 def check_roles(picked):
 
@@ -604,4 +601,11 @@ def predict():
 
 
 if __name__ == '__main__':
+    update_data()
+
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=update_data, trigger="interval", hours=24)
+    scheduler.start()
+    atexit.register(lambda: scheduler.shutdown())
+    
     app.run(debug=True)
