@@ -27,7 +27,7 @@ def update_data():
 
         with open(file_name2, 'w') as f:
             f.write("")
-        with open(file_name2, 'w') as f:
+        with open(file_name3, 'w') as f:
             f.write("")
 
     chrome_driver_path = os.path.join(BASE_DIR, "chromedriver")
