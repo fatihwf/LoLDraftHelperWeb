@@ -264,7 +264,7 @@ def update_data():
                             f.write(f",{position}")
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=update_data(), trigger="interval", hours=24)
+scheduler.add_job(func=update_data, trigger="interval", hours=24)
 scheduler.start()
 atexit.register(lambda: scheduler.shutdown())
 
