@@ -21,16 +21,19 @@ def update_data():
         folder_path = os.path.join(DATA_DIR, folder)
         file_name = os.path.join(folder_path, f"{folder}-data.txt")
         file_name2 = os.path.join(folder_path, f"{folder}-data2.txt")
+        file_name3 = os.path.join(folder_path, f"{folder}-role.txt")
         with open(file_name, 'w') as f:
             f.write("")
 
+        with open(file_name2, 'w') as f:
+            f.write("")
         with open(file_name2, 'w') as f:
             f.write("")
 
     chrome_driver_path = os.path.join(BASE_DIR, "chromedriver")
 
     chrome_options = Options()
-    chrome_options.add_argument("--headless")  
+    chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
 
@@ -39,11 +42,11 @@ def update_data():
     urls = [
         "https://lol.fandom.com/wiki/TCL/2025_Season/Winter_Split/Picks_and_Bans",
         "https://lol.fandom.com/wiki/LEC/2025_Season/Winter_Season/Picks_and_Bans",
-        "https://lol.fandom.com/wiki/LFL/2025_Season/Flash_In_Groups/Picks_and_Bans",
         "https://lol.fandom.com/wiki/LCP/2025_Season/Season_Kickoff/Picks_and_Bans",
         "https://lol.fandom.com/wiki/Esports_Balkan_League/2025_Season/Winter_Split/Picks_and_Bans",
         "https://lol.fandom.com/wiki/Prime_League_1st_Division/2025_Season/Winter_Split/Picks_and_Bans",
         "https://lol.fandom.com/wiki/LCK/2025_Season/Cup/Picks_and_Bans"
+        "https://lol.fandom.com/wiki/LFL/2025_Season/Flash_In_Swiss/Picks_and_Bans"
     ]
 
     for url in urls:
@@ -222,7 +225,9 @@ def update_data():
 
     role_urls = [
         "https://lol.fandom.com/wiki/LCK/2025_Season/Cup/Runes"
-
+        "https://lol.fandom.com/wiki/TCL/2025_Season/Winter_Split/Runes"
+        "https://lol.fandom.com/wiki/LFL/2025_Season/Flash_In_Swiss/Runes"
+        "https://lol.fandom.com/wiki/LEC/2025_Season/Winter_Season/Runes"
     ]
 
     import re
