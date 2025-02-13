@@ -1,23 +1,270 @@
-
+from apscheduler.schedulers.background import BackgroundScheduler
+import atexit
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import os
 from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
-import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
+
+
+
+def update_data():
+    chrome_driver_path = os.path.join(BASE_DIR, "chromedriver")
+
+    service = Service(chrome_driver_path)
+    driver = webdriver.Chrome(service=service)
+
+    urls = [
+        "https://lol.fandom.com/wiki/TCL/2025_Season/Winter_Split/Picks_and_Bans",
+        "https://lol.fandom.com/wiki/LEC/2025_Season/Winter_Season/Picks_and_Bans",
+        "https://lol.fandom.com/wiki/LFL/2025_Season/Flash_In_Groups/Picks_and_Bans",
+        "https://lol.fandom.com/wiki/LCP/2025_Season/Season_Kickoff/Picks_and_Bans",
+        "https://lol.fandom.com/wiki/Esports_Balkan_League/2025_Season/Winter_Split/Picks_and_Bans",
+        "https://lol.fandom.com/wiki/Prime_League_1st_Division/2025_Season/Winter_Split/Picks_and_Bans",
+        "https://lol.fandom.com/wiki/LCK/2025_Season/Cup/Picks_and_Bans"
+    ]
+
+    for url in urls:
+
+        driver.get(url)
+
+        # Tablonun bulunduğu öğeyi bulma
+        try:
+            table = WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located((By.ID, "pbh-table"))
+            )
+        except:
+            print(f"Tablo bulunamadı: {url}")
+            continue  # Tablo bulunamazsa bir sonraki URL'ye geç
+
+        # Tablo içindeki tüm <tr> öğelerini alma
+        rows = table.find_elements(By.TAG_NAME, "tr")
+
+        # İlk 2 ve son 2 <tr> öğelerini hariç tutarak diğerlerini kontrol etme
+        rows_to_process = rows[2:]  # İlk 2 öğeyi atla, geri kalan hepsini al
+
+        for row in rows_to_process:
+            # Row içindeki tüm <td> öğelerini al
+            tds = row.find_elements(By.TAG_NAME, "td")
+
+            # Listeleri tanımlama
+            blue_list = []
+            red_list = []
+
+            # Kazananı belirleme
+            winner = None
+            if len(tds) >= 3:
+                if "pbh-winner" in tds[1].get_attribute("class"):
+                    winner = "blue"  # İkinci <td> kazanan ise blue
+                elif "pbh-winner" in tds[2].get_attribute("class"):
+                    winner = "red"  # Üçüncü <td> kazanan ise red
+
+            # Her bir <td> için sınıf kontrolü yapma
+            for td in tds:
+                td_class = td.get_attribute("class")
+                data_c1 = td.get_attribute("data-c1")
+                data_c2 = td.get_attribute("data-c2")
+
+                if "pbh-ban" in td_class:
+                    continue  # Eğer pbh-ban sınıfı varsa, bu öğeyi atla
+
+                if "pbh-blue" in td_class and data_c1:  # pbh-blue sınıfı ve data-c1 varsa
+                    blue_list.append(data_c1)
+                    if data_c2:
+                        blue_list.append(data_c2)
+
+                elif "pbh-red" in td_class and data_c1:  # pbh-red sınıfı ve data-c1 varsa
+                    red_list.append(data_c1)
+                    if data_c2:
+                        red_list.append(data_c2)
+
+            # Kazanan belirlendiyse dosya işlemleri
+            if winner:
+                # Blue listesi için dosya işlemleri
+                for champion in blue_list:
+
+                    # Klasör oluşturma
+                    folder_name = os.path.join(DATA_DIR, champion)
+                    if not os.path.exists(folder_name):
+                        os.makedirs(folder_name)
+
+                    # Dosya adı
+                    file_name = os.path.join(folder_name, f"{champion}-data.txt")
+
+                    with open(file_name, 'a') as f:  # 'a' modunu kullanıyoruz
+                        for other_champion in blue_list:
+                            if winner == "blue":
+                                f.write(f"{other_champion}-W\n")
+                            elif winner == "red":
+                                f.write(f"{other_champion}-L\n")
+
+                # Red listesi için dosya işlemleri
+                for champion in red_list:
+                    # Klasör oluşturma
+                    folder_name = os.path.join(DATA_DIR, champion)
+                    if not os.path.exists(folder_name):
+                        os.makedirs(folder_name)
+
+                    # Dosya adı
+                    file_name = os.path.join(folder_name, f"{champion}-data.txt")
+
+                    # Dosya yoksa oluşturma
+                    with open(file_name, 'a') as f:  # 'a' modunu kullanıyoruz
+                        for other_champion in red_list:
+                            if winner == "blue":
+                                f.write(f"{other_champion}-L\n")
+                            elif winner == "red":
+                                f.write(f"{other_champion}-W\n")
+
+            # Listeleri temizleme
+            blue_list.clear()
+            red_list.clear()
+
+    from collections import defaultdict
+
+    for champion_folder in os.listdir(DATA_DIR):
+        champion_folder_path = os.path.join(DATA_DIR, champion_folder)
+
+        # Sadece klasörleri kontrol et
+        if os.path.isdir(champion_folder_path):
+            # Şampiyonun W ve L sayısını saklamak için bir defaultdict
+            win_loss_count = defaultdict(lambda: {"W": 0, "L": 0})
+
+            # Klasördeki tüm *.txt dosyalarını kontrol et
+            for file_name in os.listdir(champion_folder_path):
+                if file_name.endswith("-data.txt"):
+                    file_path = os.path.join(champion_folder_path, file_name)
+
+                    with open(file_path, 'r') as f:
+                        for line in f:
+                            # Satırı temizle ve W veya L sayısını güncelle
+                            line = line.strip()
+                            if line:
+                                parts = line.split('-')
+
+                                other_champion = parts[0]  # Diğer şampiyonun adı
+                                result = parts[1]  # W veya L
+
+                                if result == "W":
+                                    win_loss_count[other_champion]["W"] += 1
+                                elif result == "L":
+                                    win_loss_count[other_champion]["L"] += 1
+
+            # Her şampiyon için dosyayı güncelleme
+            for file_name in os.listdir(champion_folder_path):
+                if file_name.endswith("-data.txt"):
+                    file_path = os.path.join(champion_folder_path, file_name)
+
+                    # Güncellenmiş bilgileri dosyaya yazma
+                    with open(file_path, 'w') as f:  # 'w' modunda açarak dosyayı temizle
+                        for other_champion, counts in win_loss_count.items():
+                            f.write(f"{other_champion},{counts['W']},{counts['L']}\n")
+
+    for champion_folder in os.listdir(DATA_DIR):
+        champion_folder_path = os.path.join(DATA_DIR, champion_folder)
+
+        # Sadece klasörleri kontrol et
+        if os.path.isdir(champion_folder_path):
+            # Şampiyonun W ve L sayısını saklamak için bir defaultdict
+            win_loss_count = defaultdict(lambda: {"W": 0, "L": 0})
+
+            # Klasördeki tüm *.txt dosyalarını kontrol et
+            for file_name in os.listdir(champion_folder_path):
+                if file_name.endswith("-data2.txt"):
+                    file_path = os.path.join(champion_folder_path, file_name)
+
+                    with open(file_path, 'r') as f:
+                        for line in f:
+                            # Satırı temizle ve W veya L sayısını güncelle
+                            line = line.strip()
+                            if line:
+                                parts = line.split('-')
+
+                                other_champion = parts[0]  # Diğer şampiyonun adı
+                                result = parts[1]  # W veya L
+
+                                if result == "W":
+                                    win_loss_count[other_champion]["W"] += 1
+                                elif result == "L":
+                                    win_loss_count[other_champion]["L"] += 1
+
+            # Her şampiyon için dosyayı güncelleme
+            for file_name in os.listdir(champion_folder_path):
+                if file_name.endswith("-data2.txt"):
+                    file_path = os.path.join(champion_folder_path, file_name)
+
+                    # Güncellenmiş bilgileri dosyaya yazma
+                    with open(file_path, 'w') as f:  # 'w' modunda açarak dosyayı temizle
+                        for other_champion, counts in win_loss_count.items():
+                            f.write(f"{other_champion},{counts['W']},{counts['L']}\n")
+
+    role_urls = [
+        "https://lol.fandom.com/wiki/LCK/2025_Season/Cup/Runes"
+
+    ]
+
+    import re
+
+    for url in role_urls:
+        driver.get(url)
+
+        table = driver.find_element(By.CSS_SELECTOR, "div.table-wide-inner")
+
+        # Class'ı "rune-line" ile başlayan tüm <tr> öğelerini bulmak için XPath kullanıyoruz
+        rows = table.find_elements(By.XPATH, ".//tr[starts-with(@class, 'rune-line')]")
+
+        # Her bir satır için:
+        for row in rows:
+            # Satırdaki tüm <td> öğelerini alıyoruz
+            tds = row.find_elements(By.TAG_NAME, "td")
+
+            # Eğer en az 4 <td> öğesi varsa (3. ve 4. için)
+            if len(tds) >= 5:
+                text1 = tds[3].text
+                text2 = tds[4].text
+
+                champ  = re.sub(r'[^a-zA-Z]', '', text1).lower()
+                position = re.sub(r'[^a-zA-Z]', '', text2).lower()
+
+                champ_path = os.path.join(DATA_DIR,champ)
+                if not os.path.exists(champ_path):
+                    os.makedirs(champ_path)
+                file_name = os.path.join(champ_path, f"{champ}-role.txt")
+
+                if not os.path.exists(file_name):
+                    with open(file_name, 'r') as f:
+                        f.write(position)
+                else:
+                    with open(file_name, 'r') as f:
+                        content = f.read()
+                    if position not in content:
+                        with open(file_name, 'a') as f:
+                            f.write(f",{position}")
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=update_data(), trigger="interval", hours=24)
+scheduler.start()
+atexit.register(lambda: scheduler.shutdown())
 
 def check_roles(picked):
 
 
     picked_roles = []
-    all_roles = ["top","jg","mid","adc","sup"]
+    all_roles = ["top","jungle","mid","bot","support"]
     role_list = {
         "top" : 0,
-        "jg" : 0,
+        "jungle" : 0,
         "mid" : 0,
-        "adc" : 0,
-        "sup" : 0
+        "bot" : 0,
+        "support" : 0
     }
     x=0
     for champ in picked:
