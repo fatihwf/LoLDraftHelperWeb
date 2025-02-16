@@ -390,17 +390,20 @@ def check_roles(picked):
             role_list[role] += x
 
     role_list = dict(sorted(role_list.items(), key = lambda x:x[1],reverse = True))
+    flag = False
     for role,value in role_list.items():
         if value >= 1:
+            flag = True
             picked_roles.append(role)
             x = value - 1
             role_list[role] = -99
             break
-    for role,value in role_list.items():
-        role_list[role] += x
-        if x+value >= 1:
-            picked_roles.append(role)
-            role_list[role] = -99
+    if flag == True:
+        for role,value in role_list.items():
+            role_list[role] += x
+            if x+value >= 1:
+                picked_roles.append(role)
+                role_list[role] = -99
 
     non_picked = [item for item in all_roles if item not in picked_roles]
     print(non_picked)
