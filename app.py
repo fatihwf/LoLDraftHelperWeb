@@ -370,16 +370,12 @@ def update_data():
 
 
 
-def check_roles_rec(picked_roles,champs,two_roles,three_roles,four_roles,five_roles):
-    if not picked_roles:
-        return
-
-
 
 
 def check_roles(picked):
+    all_roles = ["top", "jungle", "mid", "bot", "support"]
     if not picked:
-        return []
+        return all_roles
 
     all_roles = ["top","jungle","mid","bot","support"]
     picked_roles = []
@@ -668,10 +664,10 @@ def predict_red(blue_bans, red_bans, blue_picked, red_picked):
     best_general = []
     best_synergy = []
     best_counter = []
-    picked_roles = check_roles(red_picked)
+    free_roles = check_roles(red_picked)
     for folder in os.listdir(path):
             if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked:
-                if set(get_role(folder)) & set(picked_roles):
+                if set(get_role(folder)) & set(free_roles):
                     synergy_score = get_synergy_score(folder, red_picked)
                     best_synergy.append((folder, synergy_score))
                     counter_score = get_counter_score(folder, blue_picked)
@@ -700,10 +696,11 @@ def predict_blue(blue_bans, red_bans, blue_picked, red_picked):
     best_general = []
     best_synergy = []
     best_counter = []
-    picked_roles = check_roles(blue_picked)
+    free_roles = check_roles(blue_picked)
+
     for folder in os.listdir(path):
             if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked:
-                if set(get_role(folder)) & set(picked_roles):
+                if set(get_role(folder)) & set(free_roles):
                     synergy_score = get_synergy_score(folder, blue_picked)
                     best_synergy.append((folder, synergy_score))
 
