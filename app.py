@@ -370,40 +370,108 @@ def update_data():
 
 
 
+def check_roles_rec(picked_roles,champs,two_roles,three_roles,four_roles,five_roles):
+    if not picked_roles:
+        return
+
+
+
+
 def check_roles(picked):
+    if not picked:
+        return
 
-
-    picked_roles = []
     all_roles = ["top","jungle","mid","bot","support"]
-    role_list = {
-        "top" : 0,
-        "jungle" : 0,
-        "mid" : 0,
-        "bot" : 0,
-        "support" : 0
-    }
-    x=0
+    picked_roles = []
+    champ_dict = {}
+
+    # Her şampiyonu, oynayabileceği roller listesiyle sakla
     for champ in picked:
         roles = get_role(champ)
-        for role in roles:
-            x = (1 / len(roles))
-            role_list[role] += x
+        champ_dict[champ] = roles
 
-    role_list = dict(sorted(role_list.items(), key = lambda x:x[1],reverse = True))
-    flag = False
-    for role,value in role_list.items():
-        if value >= 1:
-            flag = True
-            picked_roles.append(role)
-            x = value - 1
-            role_list[role] = -99
-            break
-    if flag == True:
-        for role,value in role_list.items():
-            role_list[role] += x
-            if x+value >= 1:
-                picked_roles.append(role)
-                role_list[role] = -99
+    # Tek rollü durum: Eğer bir şampiyonun listesi yalnızca 1 eleman içeriyorsa
+    flag = True
+    while flag:
+        flag = False
+        for champ, role_list in list(champ_dict.items()):
+            if len(role_list) == 1:
+                role = role_list[0]
+                if role not in picked_roles:
+                    picked_roles.append(role)
+                flag = True
+                # Tüm şampiyonların listelerinden bu rolü çıkar
+                for c in list(champ_dict.keys()):
+                    if role in champ_dict[c]:
+                        champ_dict[c].remove(role)
+
+    # İki rollü durum: Eğer iki şampiyonun rol listesi (küme olarak) aynıysa
+    flag = True
+    while flag:
+        flag = False
+        for champ, role_list in list(champ_dict.items()):
+            if len(role_list) == 2:
+                matching = [c for c, roles in champ_dict.items() if set(roles) == set(role_list)]
+                if len(matching) == 2:
+                    for role in role_list:
+                        if role not in picked_roles:
+                            picked_roles.append(role)
+                    flag = True
+                    for c in list(champ_dict.keys()):
+                        for role in role_list:
+                            if role in champ_dict[c]:
+                                champ_dict[c].remove(role)
+
+    # Üç rollü durum: Eğer üç şampiyonun rol listesi (küme olarak) aynıysa
+    flag = True
+    while flag:
+        flag = False
+        for champ, role_list in list(champ_dict.items()):
+            if len(role_list) == 3:
+                matching = [c for c, roles in champ_dict.items() if set(roles) == set(role_list)]
+                if len(matching) == 3:
+                    for role in role_list:
+                        if role not in picked_roles:
+                            picked_roles.append(role)
+                    flag = True
+                    for c in list(champ_dict.keys()):
+                        for role in role_list:
+                            if role in champ_dict[c]:
+                                champ_dict[c].remove(role)
+
+    # 4 rollü durum: Eğer dört şampiyonun rol listesi (küme olarak) aynıysa
+    flag = True
+    while flag:
+        flag = False
+        for champ, role_list in list(champ_dict.items()):
+            if len(role_list) == 4:
+                matching = [c for c, roles in champ_dict.items() if set(roles) == set(role_list)]
+                if len(matching) == 4:
+                    for role in role_list:
+                        if role not in picked_roles:
+                            picked_roles.append(role)
+                    flag = True
+                    for c in list(champ_dict.keys()):
+                        for role in role_list:
+                            if role in champ_dict[c]:
+                                champ_dict[c].remove(role)
+
+    # 5 rollü durum: Eğer beş şampiyonun rol listesi (küme olarak) aynıysa
+    flag = True
+    while flag:
+        flag = False
+        for champ, role_list in list(champ_dict.items()):
+            if len(role_list) == 5:
+                matching = [c for c, roles in champ_dict.items() if set(roles) == set(role_list)]
+                if len(matching) == 5:
+                    for role in role_list:
+                        if role not in picked_roles:
+                            picked_roles.append(role)
+                    flag = True
+                    for c in list(champ_dict.keys()):
+                        for role in role_list:
+                            if role in champ_dict[c]:
+                                champ_dict[c].remove(role)
 
     non_picked = [item for item in all_roles if item not in picked_roles]
     return non_picked
