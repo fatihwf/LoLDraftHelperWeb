@@ -379,7 +379,7 @@ def check_roles_rec(picked_roles,champs,two_roles,three_roles,four_roles,five_ro
 
 def check_roles(picked):
     if not picked:
-        return
+        return []
 
     all_roles = ["top","jungle","mid","bot","support"]
     picked_roles = []
