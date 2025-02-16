@@ -403,6 +403,7 @@ def check_roles(picked):
             role_list[role] = -99
 
     non_picked = [item for item in all_roles if item not in picked_roles]
+    print(non_picked)
     return non_picked
 
 def get_role(champ):
