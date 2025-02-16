@@ -336,7 +336,7 @@ def update_data():
         table = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, "table-wide"))
         )
-        
+
         # Class'ı "rune-line" ile başlayan tüm <tr> öğelerini bulmak için XPath kullanıyoruz
         rows = table.find_elements(By.XPATH, ".//tr[starts-with(@class, 'rune-line')]")
 
@@ -406,7 +406,6 @@ def check_roles(picked):
                 role_list[role] = -99
 
     non_picked = [item for item in all_roles if item not in picked_roles]
-    print(non_picked)
     return non_picked
 
 def get_role(champ):
@@ -601,9 +600,10 @@ def predict_red(blue_bans, red_bans, blue_picked, red_picked):
     best_general = []
     best_synergy = []
     best_counter = []
+    picked_roles = check_roles(red_picked)
     for folder in os.listdir(path):
             if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked:
-                if set(get_role(folder)) & set(check_roles(red_picked)):
+                if set(get_role(folder)) & set(picked_roles):
                     synergy_score = get_synergy_score(folder, red_picked)
                     best_synergy.append((folder, synergy_score))
                     counter_score = get_counter_score(folder, blue_picked)
@@ -632,9 +632,10 @@ def predict_blue(blue_bans, red_bans, blue_picked, red_picked):
     best_general = []
     best_synergy = []
     best_counter = []
+    picked_roles = check_roles(blue_picked)
     for folder in os.listdir(path):
             if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked:
-                if set(get_role(folder)) & set(check_roles(blue_picked)):
+                if set(get_role(folder)) & set(picked_roles):
                     synergy_score = get_synergy_score(folder, blue_picked)
                     best_synergy.append((folder, synergy_score))
 
@@ -711,5 +712,5 @@ if __name__ == '__main__':
     atexit.register(lambda: scheduler.shutdown())
 
 
-    app.run(debug=True)
+    app.run(debug=True,use_reloader = False)
 
