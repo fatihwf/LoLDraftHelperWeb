@@ -386,88 +386,48 @@ def check_roles(picked):
         roles = get_role(champ)
         champ_dict[champ] = roles
 
-    # Tek rollü durum: Eğer bir şampiyonun listesi yalnızca 1 eleman içeriyorsa
-    flag = True
-    while flag:
-        flag = False
-        for champ, role_list in list(champ_dict.items()):
-            if len(role_list) == 1:
-                role = role_list[0]
-                if role not in picked_roles:
-                    picked_roles.append(role)
-                flag = True
-                # Tüm şampiyonların listelerinden bu rolü çıkar
-                for c in list(champ_dict.keys()):
-                    if role in champ_dict[c]:
-                        champ_dict[c].remove(role)
 
-    # İki rollü durum: Eğer iki şampiyonun rol listesi (küme olarak) aynıysa
     flag = True
-    while flag:
-        flag = False
-        for champ, role_list in list(champ_dict.items()):
-            if len(role_list) == 2:
-                matching = [c for c, roles in champ_dict.items() if set(roles) == set(role_list)]
-                if len(matching) == 2:
-                    for role in role_list:
-                        if role not in picked_roles:
-                            picked_roles.append(role)
-                    flag = True
-                    for c in list(champ_dict.keys()):
-                        for role in role_list:
-                            if role in champ_dict[c]:
-                                champ_dict[c].remove(role)
+    i = 1
+    while i < 6:
+        if all(not value for value in champ_dict.values()):
+            break
 
-    # Üç rollü durum: Eğer üç şampiyonun rol listesi (küme olarak) aynıysa
-    flag = True
-    while flag:
         flag = False
-        for champ, role_list in list(champ_dict.items()):
-            if len(role_list) == 3:
-                matching = [c for c, roles in champ_dict.items() if set(roles) == set(role_list)]
-                if len(matching) == 3:
-                    for role in role_list:
-                        if role not in picked_roles:
-                            picked_roles.append(role)
-                    flag = True
-                    for c in list(champ_dict.keys()):
-                        for role in role_list:
-                            if role in champ_dict[c]:
-                                champ_dict[c].remove(role)
 
-    # 4 rollü durum: Eğer dört şampiyonun rol listesi (küme olarak) aynıysa
-    flag = True
-    while flag:
-        flag = False
-        for champ, role_list in list(champ_dict.items()):
-            if len(role_list) == 4:
-                matching = [c for c, roles in champ_dict.items() if set(roles) == set(role_list)]
-                if len(matching) == 4:
-                    for role in role_list:
-                        if role not in picked_roles:
-                            picked_roles.append(role)
+        # Tek rol
+        if i == 1:
+            for champ, role_list in list(champ_dict.items()):
+                if len(role_list) == i:
+                    role = role_list[0]
+                    if role not in picked_roles:
+                        picked_roles.append(role)
                     flag = True
+                    # Tüm şampiyonların listelerinden bu rolü çıkar
                     for c in list(champ_dict.keys()):
-                        for role in role_list:
-                            if role in champ_dict[c]:
-                                champ_dict[c].remove(role)
+                        if role in champ_dict[c]:
+                            champ_dict[c].remove(role)
 
-    # 5 rollü durum: Eğer beş şampiyonun rol listesi (küme olarak) aynıysa
-    flag = True
-    while flag:
-        flag = False
-        for champ, role_list in list(champ_dict.items()):
-            if len(role_list) == 5:
-                matching = [c for c, roles in champ_dict.items() if set(roles) == set(role_list)]
-                if len(matching) == 5:
-                    for role in role_list:
-                        if role not in picked_roles:
-                            picked_roles.append(role)
-                    flag = True
-                    for c in list(champ_dict.keys()):
+        else:
+            for champ, role_list in list(champ_dict.items()):
+
+                if len(role_list) == i:
+                    matching = [c for c, roles in champ_dict.items() if set(roles) == set(role_list)]
+                    if len(matching) == i:
+
                         for role in role_list:
-                            if role in champ_dict[c]:
-                                champ_dict[c].remove(role)
+                            if role not in picked_roles:
+                                picked_roles.append(role)
+                        flag = True
+                        rolescopy = role_list.copy()
+                        for c in list(champ_dict.keys()):
+                            for role in rolescopy:
+                                if role in champ_dict[c]:
+                                    champ_dict[c].remove(role)
+
+        if flag == True:
+            i = 0
+        i += 1
 
     non_picked = [item for item in all_roles if item not in picked_roles]
     return non_picked
@@ -658,7 +618,8 @@ def get_champion_list():
 
     return jsonify({'championList': champion_list})
 
-def predict_red(blue_bans, red_bans, blue_picked, red_picked):
+def predict_red(blue_bans, red_bans, blue_picked, red_picked,fearless_picked):
+
 
     path = DATA_DIR
     best_general = []
@@ -666,7 +627,8 @@ def predict_red(blue_bans, red_bans, blue_picked, red_picked):
     best_counter = []
     free_roles = check_roles(red_picked)
     for folder in os.listdir(path):
-            if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked:
+            folder = folder.lower()
+            if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked and folder not in fearless_picked:
                 if set(get_role(folder)) & set(free_roles):
                     synergy_score = get_synergy_score(folder, red_picked)
                     best_synergy.append((folder, synergy_score))
@@ -690,7 +652,7 @@ def predict_red(blue_bans, red_bans, blue_picked, red_picked):
 
     return general_recommendations, synergetic_recommendations, counter_recommendations
 
-def predict_blue(blue_bans, red_bans, blue_picked, red_picked):
+def predict_blue(blue_bans, red_bans, blue_picked, red_picked,fearless_picked):
     path = DATA_DIR
 
     best_general = []
@@ -699,7 +661,7 @@ def predict_blue(blue_bans, red_bans, blue_picked, red_picked):
     free_roles = check_roles(blue_picked)
 
     for folder in os.listdir(path):
-            if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked:
+            if folder not in blue_bans and folder not in red_bans and folder not in blue_picked and folder not in red_picked and folder not in fearless_picked:
                 if set(get_role(folder)) & set(free_roles):
                     synergy_score = get_synergy_score(folder, blue_picked)
                     best_synergy.append((folder, synergy_score))
@@ -756,11 +718,11 @@ def predict():
     blue_picked = data['blue_picked']
     red_picked = data['red_picked']
     side = data['side']
-
+    fearless_picked = data['fearless_picked']
     if side == 'blue':
-        general, synergy, counter = predict_blue(blue_bans, red_bans, blue_picked, red_picked)
+        general, synergy, counter = predict_blue(blue_bans, red_bans, blue_picked, red_picked,fearless_picked)
     else:
-        general, synergy, counter = predict_red(blue_bans, red_bans, blue_picked, red_picked)
+        general, synergy, counter = predict_red(blue_bans, red_bans, blue_picked, red_picked,fearless_picked)
 
     general = extract_champion_and_score(general)
     synergy = extract_champion_and_score(synergy)
