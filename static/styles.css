@@ -144,3 +144,37 @@ footer {
     height: auto;
     margin-right: 10px;
 }
+
+.mode-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+/* Mod seçim butonlarının temel stilleri */
+.mode-button {
+    padding: 20px;
+    width: 150px;
+    height: 150px;
+    background-color: #ffffff;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Üzerine gelindiğinde (hover) uygulanacak efekt */
+.mode-button:hover {
+    background-color: #359ce0;
+    border-color: #999;
+    transform: scale(1.05);
+}
+#fearless-picked-champions-list {
+    display: flex;
+    flex-direction: row;
+    gap: 5px; /* Aralarındaki boşluk */
+}
